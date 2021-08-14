@@ -2,10 +2,19 @@
 <?php include 'include/header.php'; ?>
 
 
-
 <div class="wrapper">
 	<?php include 'include/navbar.php'; ?>
-  	<?php include 'include/menubar.php'; ?>
+  	<?php include 'include/menubar.php'; 
+
+include 'include/database.php';
+
+
+$sql1 = mysqli_query($conn,"SELECT COUNT(*) FROM tbl_leave_application WHERE YEAR(Inclusive_Date_From) = '2021' AND enumLeave_Status = 'Approve' AND MONTH(Inclusive_Date_From)  ='06' GROUP by month(Inclusive_Date_From)");
+
+
+  $rowjan  = $sql1 -> fetch_assoc();
+
+    ?>
 
  
 <div class="content-wrapper">
@@ -113,7 +122,7 @@
           </div>
           <!-- ./col -->
 
-          <!-- <div class="col-lg-12">
+          <div class="col-lg-12">
               <div class="au-card m-b-30">
                   <div class="au-card-inner">
                   <div class="au-card-inner">
@@ -121,9 +130,24 @@
                         
                   </div>
               </div>
-          </div> -->
-     
+          </div>
+             <div class="col-lg-12">
+              
+                    <div style="width: 100%">
+                  <canvas id="canvas" height="450" width="1000"></canvas>
+             </div>
+             <div class="d-flex flex-row justify-content-end">
+                  <span class="mr-2">
+                    <i class="fa fa-square text-primary"></i> This year 
+                  </span>
+
+                  <span>
+                    <i class="fa fa-square text-gray"></i> Last year
+                  </span>
+                </div>
+     </div>
       
+
     <?php }else { ?>
         <!-- Small boxes (Stat box) -->
        <div class="row">
@@ -228,15 +252,9 @@
           </div>
           <!-- ./col -->
 
-          <!-- <div class="col-lg-12">
-              <div class="au-card m-b-30">
-                  <div class="au-card-inner">
-                  <div class="au-card-inner">
-                      <h3 class="title-2 m-b-40">Leave Approved</h3>
-                       
-                  </div>
-              </div>
-          </div> -->
+       
+
+          </div>
           
       <?php }?>   
 
@@ -251,3 +269,4 @@
   <?php include 'include/scripts.php'; ?>
   </body>
 </html>
+

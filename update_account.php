@@ -72,7 +72,7 @@
                  </div>
               </div>              
             </div>   
-                 
+         
            <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Civil Status</label>
@@ -100,8 +100,10 @@
                     <input type="text" class="form-control" id="extension" name="address" placeholder="Enter Address"  value="<?php echo strtoupper($emp_user['varAddress']); ?>">
                </div>              
           </div>
-<?php if($userlevel=="Employee"){ ?>
-          <div class="col-md-6">
+
+ 
+<?php if($userlevel=="HR Manager"){ ?>
+         <!--  <div class="col-md-6">
               <div class="form-group">
                  <label >Work Schedule</label>                   
                  <select class="form-control" style="width: 100%;" name="enumscheduletype"  id="enumscheduletype">
@@ -110,11 +112,11 @@
                      <option value="Normal Work Time">Normal Work Time</option>                                                                                
                 </select>
                </div>              
-           </div> 
+           </div>  -->
 
 
 
-<?php }else{ ?>
+
           <div class="col-md-6">
               <div class="form-group">
                 <label  class="col-sm-3 control-label">Department</label>
@@ -161,7 +163,7 @@
           <div class="col-md-6">
               <div class="form-group">
                  <label >Work Schedule</label>                   
-                  <select class="form-control" style="width: 100%;" name="enumscheduletype"  id="enumscheduletype">
+                  <select class="form-control" style="width: 100%;" name="enumWork_Schedule"  id="enumWork_Schedule">
                      <option selected="selected" value="<?php echo $emp_user['enumWork_Schedule']; ?>"><?php echo $emp_user['enumWork_Schedule']; ?></option>
                      <option value="Flexible Work Time">Flexible Work Time</option>
                      <option value="Normal Work Time">Normal Work Time</option>                                                                                
@@ -171,17 +173,19 @@
 
            <div class="col-md-6">
               <div class="form-group">
-                 <label >UserLevel</label>                   
-                <select class="form-control" style="width: 100%;" name="enumUserLevel"  id="enumUserLevel">
-                      <option selected="selected" value="<?php echo $emp_user['enumUser_Level']; ?>"><?php echo $emp_user['enumUser_Level']; ?></option>                                    
-                     <option value="Employee">Employee</option>
-                     <option value="HR-Staff">HR-Staff</option>
-                     <option value="Admin Officer">Admin Officer</option>
-                     <option value="Department  Head">Department  Head</option>
-                     <option value="System Admin">System Admin</option>                                                                     
-                </select>
-               </div>              
-           </div> 
+                <label  class="col-sm-3 control-label">Day Off</label>
+                    <select class="form-control" style="width: 100%;" name="Day_Off"  id="Day_Off">
+                      <option selected="selected" value="<?php echo $emp_user['enumDay_Off']; ?>"><?php echo $emp_user['enumDay_Off']; ?></option>
+                      <option value="Monday">Monday</option>
+                      <option value="Tuesday">Tuesday</option>
+                      <option value="Wednesday">Wednesday</option>
+                      <option value="Thursday">Thursday</option>
+                      <option value="Friday">Friday</option>
+                      <option value="Saturday">Saturday</option>
+                      <option value="Saturday-Sunday">Saturday-Sunday</option>
+                      </select> 
+              </div>
+          </div>  
 
            <!--  <div class="modal-footer">
                   <button type="submit" name="add_employee" class="btn btn-primary">Submit</button>

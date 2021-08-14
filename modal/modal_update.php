@@ -23,17 +23,6 @@
                                     <input type="text" class="form-control"  name="leave_description" placeholder="Enter Leave Description" value="<?php echo $eleaverow['varLeave_Description'] ; ?>">
                                   </div>
                                   
-                                  <?php  if($userlevel=="HR Manager" || $userlevel == "System Admin" || $userlevel == "Department Head" || $userlevel == "Admin Officer" ){?>
-                                   <label for="exampleInputEmail1">Leave Status Remarks</label>
-                                    <select class="form-control" style="width: 100%;" name="civil_status"  id="civil_status">
-                                            <option value="">Select a State</option>  
-                                            <option value="1">Hr Manager For Approval</option>
-                                            <option value="2">Admin Officer For Approval</option>
-                                            <option value="4">For Computation</option>
-                                                                                                           
-                                    </select>
-                                  </div>
-                                <?php }?>
 
                                   
                               </div>
@@ -48,7 +37,7 @@
                           <!-- /.modal LEAVE -dialog -->
                         </div>
 
-                        <!-- DELETE MODAL LEAVE -->
+                      <!-- DELETE MODAL LEAVE -->
 
                         <div class="modal fade" id="delete-modal-leave<?php echo $leaverow['intLeave_ID']; ?>"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                           <div class="modal-dialog" >
@@ -106,7 +95,7 @@
                                   <input type="hidden" class="form-control"  name="position_id"   value="<?php echo $positionrow['intPosition_ID'] ; ?>" >
                                   <div class="form-group">
                                    <label for="exampleInputEmail1">Position</label>   
-                                    <input type="text" class="form-control"  name="position" placeholder="Enter Leave Type" value="<?php echo $epostrow['varPosition'] ; ?>" >
+                                    <input type="text" class="form-control"  name="position" placeholder="Enter Position Title" value="<?php echo $epostrow['varPosition'] ; ?>" >
                                   </div>
                                   <div class="form-group">
                                    <label for="exampleInputEmail1">Salary Grade</label>
@@ -126,7 +115,7 @@
 
                                  <div class="form-group">
                                    <label for="exampleInputEmail1">Monthly Salary</label>   
-                                    <input type="text" class="form-control"  name="monthly_salary" placeholder="Enter Leave Type" value="<?php echo $epostrow['decimalMonthly_Salary'] ; ?>">
+                                    <input type="text" class="form-control"  name="monthly_salary" placeholder="Enter Monthly Salary" value="<?php echo $epostrow['decimalMonthly_Salary'] ; ?>">
                                   </div>
                                    
                                   
@@ -165,6 +154,8 @@
                                         <input type="hidden" class="form-control"  name="position_id"   value="<?php echo $positionrow['intPosition_ID'] ; ?>" > 
                                   </div> 
 
+
+
                                   
                               </div>
                                   <div class="modal-footer ">
@@ -180,14 +171,14 @@
                         <!-- END DELETE MODAL DEPARTMENT -->
 
 
-                      <!-- MODAL DEPARTMENT -->
+                      <!-- MODAL UPDATE DEPARTMENT -->
                         <div class="modal fade" id="edit-modal-department<?php echo $deptrow['intDepartment_ID']; ?>">
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header alert-success">
                                 <button type="button " class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title"><i class="fa fa-pencil-square-o margin-r-5"></i> Update New Department</h4>
+                                <h4 class="modal-title"><i class="fa fa-pencil-square-o margin-r-5"></i> Update Department</h4>
                               </div>
                               <div class="modal-body ">
                               <?php
@@ -199,6 +190,11 @@
                                     <input type="hidden" class="form-control"  name="depart_id"   value="<?php echo $edepartrow['intDepartment_ID'] ; ?>" >
                                    <label for="exampleInputEmail1">Department</label> 
                                     <input type="text" class="form-control"  name="department" placeholder="Enter Department Name" value="<?php echo $edepartrow['varDepartment'] ; ?>">
+                                  </div>
+                                  <div class="form-group">
+                                    <input type="hidden" class="form-control"  name="depart_id"   value="<?php echo $edepartrow['intDepartment_ID'] ; ?>" >
+                                   <label for="exampleInputEmail1">Department ShortName</label> 
+                                    <input type="text" class="form-control"  name="department_shortname" placeholder="Enter Department Short Name" value="<?php echo $edepartrow['varDepartment_Shortname'] ; ?>">
                                   </div>
 <!-- 
                                  <div class="form-group">
@@ -267,59 +263,7 @@
                         </div>
                         <!-- END DELETE MODAL DEPARTMENT -->
 
-
-
-                      <!-- MODAL SCHEDULE -->
-                        <div class="modal fade" id="edit-modal-schedule<?php echo $rowsched['intWorkSched_ID']; ?>">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header alert-info">
-                                <button type="button " class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title"><i class="fa fa-pencil-square-o margin-r-5"></i>Update Inclusive Time Attendance</h4>
-                              </div>
-                              <div class="modal-body ">
-                              <?php
-                                  $edit=mysqli_query($conn,"select * from tbl_work_schedule where intWorkSched_ID='".$rowsched['intWorkSched_ID']."'");
-                                  $erow=mysqli_fetch_array($edit);
-                              ?>                                
-                                 <form role="form" method="post" enctype = "multipart/form-data" action="query/update_query.php">
-                                  <div class="bootstrap-timepicker">
-                                   <label for="exampleInputEmail1">Time IN</label>
-                                     <input type="hidden" class="form-control"  name="sched_id"   value="<?php echo $rowsched['intWorkSched_ID'] ; ?>" >
-                                     <input type="text" class="form-control timepicker1" id="timein" name="timein" value="<?php echo date('h:i A', strtotime($erow['Inclusive_Time_From'])); ?>" required>
-                                  </div>
-                                   <div class="bootstrap-timepicker">
-                                   <label for="exampleInputEmail1">Time OUT</label>   
-                                     <input type="text" class="form-control timepicker" id="timeout" name="timeout" required value="<?php echo date('h:i A', strtotime($erow['Inclusive_Time_To'])); ?>">
-                                  </div>
-
-                                  <div class="form-group">
-                                      <label for="exampleInputEmail1">Work Schedule</label>
-                                      <select class="form-control" style="width: 100%;" name="workschedule">
-                                        <option value="<?php echo $erow['enumSchedule_Type']; ?>"><?php echo $erow['enumSchedule_Type']; ?></option> 
-                                        <option value="Flexible Work Time">Flexible Work Time</option>                                    
-                                        <option value="Normal Work Time">Normal Work Time</option>
-                                                                                                   
-                                    </select>
-                                    </div>
-
-                                  
-                              </div>
-                                  <div class="modal-footer ">
-                                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                      <button type="submit" name="update_schedule" class="btn btn-success">Save changes</button>
-                                    </form>
-                                  </div>
-                            </div>
-                            <!-- /.modal-content -->
-                          </div>
-                          <!-- /.modal-dialog -->
-                        </div>
-                        <!-- END MODAL SCHEDULE -->
-
-                 
-                      <!-- DELETE MODAL SCHEDULE -->
+                        <!-- DELETE MODAL SCHEDULE -->
 
                         <div class="modal fade" id="delete-modal-schedule<?php echo $rowsched['intWorkSched_ID']; ?>"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                           <div class="modal-dialog" >
@@ -356,48 +300,7 @@
                         </div>
                         <!-- END DELETE MODAL SCHEDULE -->
 
-
-
-                          <!-- MODAL HOLIDAY -->
-                        <div class="modal fade" id="edit-modal-holiday<?php echo $holidayrow['intHoliday_ID'] ; ?>">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header alert-info">
-                                <button type="button " class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title"><i class="fa fa-pencil-square-o margin-r-5"></i>Update Holiday</h4>
-                              </div>
-                              <div class="modal-body ">
-                              <?php
-                                 
-                                 $edith=mysqli_query($conn,"SELECT * FROM tbl_holiday WHERE intHoliday_ID='".$holidayrow['intHoliday_ID']."'");
-                                  $eholidayrow=mysqli_fetch_array($edith);
-                              ?>                                
-                                 <form role="form" method="post" enctype = "multipart/form-data" action="query/update_query.php">
-                                  <div class="form-group">
-                                    <input type="hidden" class="form-control"  name="holiday_id"   value="<?php echo $eholidayrow['intHoliday_ID'] ; ?>" >
-                                   <label for="exampleInputEmail1">Holiday Description</label>   
-                                    <input type="text" class="form-control"  name="holiday" placeholder="Enter Holiday Description"  value="<?php echo $eholidayrow['varHoliday_Description'] ; ?>">
-                                  </div>
-                                   <div class="form-group">
-                                   <label for="exampleInputEmail1">Date of Holiday</label>   
-                                    <input type="text" class="form-control" id="datepicker"  data-mask name="holiday_date" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask placeholder="Enter Holiday Date" value="<?php echo date("m/d/Y ",strtotime($eholidayrow['Holiday_Date'])) ; ?>" >
-                                  </div>                                                                
-                                  
-                              </div>
-                                  <div class="modal-footer ">
-                                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                      <button type="submit" name="update_holiday" class="btn btn-primary">Save changes</button>
-                                    </form>
-                                  </div>
-                            </div>
-                            <!-- /.modal-content -->
-                          </div>
-                          <!-- /.modal-dialog -->
-                        </div> 
-                        <!-- END MODAL HOLIDAY -->
-
-                         <!-- DELETE MODAL SCHEDULE -->
+                                       <!-- DELETE MODAL SCHEDULE -->
 
                         <div class="modal fade" id="delete-modal-holiday<?php echo $holidayrow['intHoliday_ID'] ; ?>"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                           <div class="modal-dialog" >
@@ -478,27 +381,130 @@
 
 
 
+                      <!-- MODAL SCHEDULE -->
+                        <div class="modal fade" id="edit-modal-schedule<?php echo $rowsched['intWorkSched_ID']; ?>">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header alert-info">
+                                <button type="button " class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title"><i class="fa fa-pencil-square-o margin-r-5"></i>Update Inclusive Time Attendance</h4>
+                              </div>
+                              <div class="modal-body ">
+                              <?php
+                                  $edit=mysqli_query($conn,"select * from tbl_work_schedule where intWorkSched_ID='".$rowsched['intWorkSched_ID']."'");
+                                  $erow=mysqli_fetch_array($edit);
+                              ?>                                
+                                 <form role="form" method="post" enctype = "multipart/form-data" action="query/update_query.php">
+                                  <div class="bootstrap-timepicker">
+                                   <label for="exampleInputEmail1">Time IN</label>
+                                     <input type="hidden" class="form-control"  name="sched_id"   value="<?php echo $rowsched['intWorkSched_ID'] ; ?>" >
+                                     <input type="text" class="form-control timepicker1" id="timein" name="timein" value="<?php echo date('h:i A', strtotime($erow['Inclusive_Time_From'])); ?>" required>
+                                  </div>
+                                   <div class="bootstrap-timepicker">
+                                   <label for="exampleInputEmail1">Time OUT</label>   
+                                     <input type="text" class="form-control timepicker" id="timeout" name="timeout" required value="<?php echo date('h:i A', strtotime($erow['Inclusive_Time_To'])); ?>">
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label for="exampleInputEmail1">Work Schedule</label>
+                                      <select class="form-control" style="width: 100%;" name="workschedule">
+                                        <option value="<?php echo $erow['enumSchedule_Type']; ?>"><?php echo $erow['enumSchedule_Type']; ?></option> 
+                                        <option value="Flexible Work Time">Flexible Work Time</option>                                    
+                                        <option value="Normal Work Time">Normal Work Time</option>
+                                                                                                   
+                                    </select>
+                                    </div>
+
+                                  
+                              </div>
+                                  <div class="modal-footer ">
+                                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                      <button type="submit" name="update_schedule" class="btn btn-success">Save changes</button>
+                                    </form>
+                                  </div>
+                            </div>
+                            <!-- /.modal-content -->
+                          </div>
+                          <!-- /.modal-dialog -->
+                        </div>
+                        <!-- END MODAL SCHEDULE -->
+
+                 
+
+
+
+
+                          <!-- MODAL HOLIDAY -->
+                        <div class="modal fade" id="edit-modal-holiday<?php echo $holidayrow['intHoliday_ID'] ; ?>">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header alert-info">
+                                <button type="button " class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title"><i class="fa fa-pencil-square-o margin-r-5"></i>Update Holiday</h4>
+                              </div>
+                              <div class="modal-body ">
+                              <?php
+                                 
+                                 $edith=mysqli_query($conn,"SELECT * FROM tbl_holiday WHERE intHoliday_ID='".$holidayrow['intHoliday_ID']."'");
+                                  $eholidayrow=mysqli_fetch_array($edith);
+                              ?>                                
+                                 <form role="form" method="post" enctype = "multipart/form-data" action="query/update_query.php">
+                                  <div class="form-group">
+                                    <input type="hidden" class="form-control"  name="holiday_id"   value="<?php echo $eholidayrow['intHoliday_ID'] ; ?>" >
+                                   <label for="exampleInputEmail1">Holiday Description</label>   
+                                    <input type="text" class="form-control"  name="holiday" placeholder="Enter Holiday Description"  value="<?php echo $eholidayrow['varHoliday_Description'] ; ?>">
+                                  </div>
+                                   <div class="form-group">
+                                   <label for="exampleInputEmail1">Date of Holiday</label>   
+                                    <input type="text" class="form-control" id="datepicker"  data-mask name="holiday_date" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask placeholder="Enter Holiday Date" value="<?php echo date("m/d/Y ",strtotime($eholidayrow['Holiday_Date'])) ; ?>" >
+                                  </div>                                                                
+                                  
+                              </div>
+                                  <div class="modal-footer ">
+                                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                      <button type="submit" name="update_holiday" class="btn btn-primary">Save changes</button>
+                                    </form>
+                                  </div>
+                            </div>
+                            <!-- /.modal-content -->
+                          </div>
+                          <!-- /.modal-dialog -->
+                        </div> 
+                        <!-- END MODAL HOLIDAY -->
+
+          
+
+
+
                                 <!--MODAL FOR APPLY LEAVE  -->
                         <div class="modal fade" id="update-modal-employee-leave-apply<?php echo $appleaverow['intApplication_ID']; ?>">
                           <div class="modal-dialog">
                             <div class="modal-content">
-                              <div class="modal-header alert-warning">
+                              <div class="modal-header alert-info">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title "><i class="fa fa-pencil-square-o margin-r-5"></i> Apply Leave</h4>
+                                <h4 class="modal-title "><i class="fa fa-pencil-square-o margin-r-5"></i>Update Apply Leaves</h4>
                               </div>
                               <div class="box-body ">
                                 
-                                 <form role="form" method="post" enctype = "multipart/form-data" action="query/add_query.php">
+                                 <form role="form" method="post" enctype = "multipart/form-data" action="query/update_query.php">
                               <div class="col-md-12">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Employee Name</label>   
                                       
                                       <select class="form-control select" style="width: 100%;" name="employ_id" disabled>
                                          <?php
-                                           $leaveapply=mysqli_query($conn,"SELECT a.*, b.*,c.* FROM tbl_leave_application a INNER JOIN tbl_employee b ON b.intEmployee_ID = a.intEmployee_ID INNER JOIN tbl_leave_type c ON c.intLeave_ID = a.intLeave_ID WHERE a.intApplication_ID = '".$appleaverow['intApplication_ID']."' ");
+                                           $leaveapply=mysqli_query($conn,"SELECT a.*, b.*,c.* FROM tbl_leave_application a INNER JOIN tbl_employee b ON b.intEmployee_ID = a.intEmployee_ID 
+                                             JOIN tbl_leave_type c ON c.intLeave_ID = a.intLeave_ID 
+                                             WHERE a.intApplication_ID = '".$appleaverow['intApplication_ID']."' ");
                                            $approw=mysqli_fetch_array($leaveapply);
                                               $employeenamerow = strtoupper($approw['varLastname'] . " ".$approw['varExtension_Name']." ". $approw['varFirstname']); 
+
+
+
+
                                               if ($approw['enumLeave_Process'] = 1) {
                                                  $eleave_status =  "Forward to Hr Manager";
                                               }else if ($approw['enumLeave_Process'] = 2){
@@ -512,7 +518,7 @@
                                 </div>                                                                                 
                               </div>
 
-
+                              <input type="hidden" class="form-control"  name="application_id"   value="<?php echo $approw['intApplication_ID']; ?>"> 
                               <div class="col-md-12">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Inclusive Date From</label>   
@@ -533,12 +539,13 @@
                                     <select class="form-control" style="width: 100%;" name="leave_type" id="leave_type" >
                                        <option value="<?php echo $approw['intLeave_ID']; ?>"><?php echo  strtoupper($approw['varLeave_Type']);  ?></option>
                                        <?php
-                                            $sql = "SELECT * FROM tbl_leave_type";
+                                            //$sql = "SELECT * FROM tbl_leave_type";
+                                             $sql = "SELECT DISTINCT varLeave_Type FROM `tbl_leave_type`";
                                             $query = $conn->query($sql);
                                             while($row = $query->fetch_assoc()){
 
                                               ?>
-                                              <option value="<?php echo $row['intLeave_ID']; ?>"><?php echo  strtoupper($row['varLeave_Type']);  ?></option>
+                                              <option value="<?php echo $row['varLeave_Type']; ?>"><?php echo  strtoupper($row['varLeave_Type']);  ?></option>
 
                                         <?php } ?>
                                       </select> 
@@ -554,18 +561,17 @@
                                     <select class="form-control" style="width: 100%;" name="description" id="description"  >    
                                          <!-- <option value="Birthday Leave"><?php echo  strtoupper($row['varLeave_Type']);  ?></option> -->
 
-                                        <option value="<?php echo  strtoupper($approw['varDescription_Leave']);  ?>"><?php echo  $approw['varDescription_Leave'];  ?></option>
-                                        <option value="Vacation Leave">Vacation Leave</option>
-                                        <option value="Sick Leave">Sick Leave</option>
-                                        <option value="Solo Parent Leave">Solo Parent Leave</option>
-                                        <option value="Maternity Leave">Maternity Leave</option>
-                                        <option value="Paternity Leave">Paternity Leave</option>
-                                        <option value="Birthday Leave">Birthday Leave</option>
-                                        <option value="Anniversary Leave">Anniversary Leave</option>
-                                        <option value="Domestic Emergency Leave">Domestic Emergency Leave</option>
-                                        <option value="Parental Oblicagation">Parental Oblicagation</option>
-                                        <option value="Graduation Leave">Graduation Leave</option>
-                                        <option value="Mourning Leave">Mourning Leave</option>                                        
+                                        <option value="<?php echo  strtoupper($approw['intLeave_ID']);  ?>"><?php echo  $approw['varLeave_Description'];  ?></option>
+                                         <?php
+                                            $sql = "SELECT * FROM tbl_leave_type";
+                                            $query = $conn->query($sql);
+                                            while($row = $query->fetch_assoc()){
+
+                                              ?>
+                                              <option value="<?php echo $row['intLeave_ID']; ?>"><?php echo  strtoupper($row['varLeave_Description']);  ?></option>
+
+                                        <?php } ?>   
+                                                                               
                                                                
                                     </select>
                                 </div>                                              
@@ -590,7 +596,7 @@
                               <div class="modal-footer">
 
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button type="submit" name="add_leave_application" class="btn btn-primary">Save changes</button>
+                                <button type="submit" name="update_leave_application" class="btn btn-primary">Save changes</button>
                               </form>                                                                              
                             
                               </div>
@@ -648,7 +654,7 @@
                           </div>
                           <!-- /.modal-dialog -->
                         </div>
-                        <!-- END DELETE MODAL LEAVE TYPE -->
+                       
 
 
 
@@ -696,7 +702,7 @@
                           </div>
                           <!-- /.modal-dialog -->
                         </div>
-                        <!-- END DELETE MODAL LEAVE TYPE -->
+                    
 
 
 
@@ -783,4 +789,11 @@
                           </div>
                           <!-- /.modal-dialog -->
                         </div>
-                        <!-- END DELETE MODAL LEAVE TYPE -->
+                     
+
+
+
+
+
+
+                       

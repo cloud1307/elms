@@ -67,7 +67,7 @@
           <ul class="treeview-menu">            
             <li><a href="view_leave_type.php"><i class="fa fa-circle-o"></i> Leave Type</a></li>
             <li><a href="view_leave_application.php"><i class="fa fa-circle-o"></i> View Pending Application</a></li>
-            <!-- <li><a href="view_leave_application.php"><i class="fa fa-circle-o"></i> View Pending Application</a></li>  -->    
+            <li><a href="view_leave_earn.php"><i class="fa fa-circle-o"></i> Leave Earn</a></li>     
           </ul>
         </li>
         
@@ -88,7 +88,7 @@
         <!-- <li><a href="#"><i class="fa fa-file-text"></i> Deductions</a></li>         -->
         <!-- <li class="header">PRINTABLES</li> -->
         <li><a href="view_holiday.php"><i class="fa fa-files-o"></i> <span>Holiday</span></a></li>
-        <li><a href="view_workschedule.php"><i class="fa fa-clock-o"></i> <span>Schedule</span></a></li>
+        <!-- <li><a href="view_workschedule.php"><i class="fa fa-clock-o"></i> <span>Schedule</span></a></li> -->
 
       <?php }?>
       </ul>       

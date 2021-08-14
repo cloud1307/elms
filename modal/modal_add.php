@@ -23,7 +23,9 @@ include 'include/database.php';
                                       
                                       <select class="form-control select2" style="width: 100%;">
                                          <?php
-                                            $sql1 = "SELECT a.*, b.* FROM tbl_employee a INNER JOIN tbl_department b ON b.intDepartment_ID = a.intDepartment_ID WHERE a.intDepartment_ID = '$dpartment_id' ";
+                                          //  $sql1 = "SELECT a.*, b.* FROM tbl_employee a INNER JOIN tbl_department b ON b.intDepartment_ID = a.intDepartment_ID WHERE a.intDepartment_ID = '$dpartment_id' ";
+                                            $sql1 = "SELECT a.*, b.* FROM tbl_employee a INNER JOIN tbl_department b ON b.intDepartment_ID = a.intDepartment_ID WHERE a.enumEmployment_Status = 'Active'";
+
                                             $query1 = $conn->query($sql1);
                                             while($emplrow = $query1->fetch_assoc()){
                                               $employeenamerow = strtoupper($emplrow['varLastname'] . " ".$emplrow['varExtension_Name']." ". $emplrow['varFirstname']); 
@@ -54,14 +56,15 @@ include 'include/database.php';
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Leave Type</span></label>   
                                     <select class="form-control" style="width: 100%;" name="leave_type" id="leave_type" >
-                                       <option value="0">Select Leave Type</option>
+                                       <option selected="" disabled="" >Select Leave Type</option>
                                        <?php
-                                            $sql = "SELECT * FROM tbl_leave_type";
+                                            //$sql = "SELECT * FROM tbl_leave_type";
+                                             $sql = "SELECT DISTINCT varLeave_Type FROM `tbl_leave_type`";
                                             $query = $conn->query($sql);
                                             while($row = $query->fetch_assoc()){
 
                                               ?>
-                                              <option value="<?php echo $row['intLeave_ID']; ?>"><?php echo  strtoupper($row['varLeave_Type']);  ?></option>
+                                              <option value="<?php echo $row['varLeave_Type']; ?>"><?php echo  strtoupper($row['varLeave_Type']);  ?></option>
 
                                         <?php } ?>
                                       </select> 
@@ -78,17 +81,15 @@ include 'include/database.php';
                                          <!-- <option value="Birthday Leave"><?php echo  strtoupper($row['varLeave_Type']);  ?></option> -->
 
                                         
-                                        <option value="Vacation Leave">Vacation Leave</option>
-                                        <option value="Sick Leave">Sick Leave</option>
-                                        <option value="Solo Parent Leave">Solo Parent Leave</option>
-                                        <option value="Maternity Leave">Maternity Leave</option>
-                                        <option value="Paternity Leave">Paternity Leave</option>
-                                        <option value="Birthday Leave">Birthday Leave</option>
-                                        <option value="Anniversary Leave">Anniversary Leave</option>
-                                        <option value="Domestic Emergency Leave">Domestic Emergency Leave</option>
-                                        <option value="Parental Oblicagation">Parental Oblicagation</option>
-                                        <option value="Graduation Leave">Graduation Leave</option>
-                                        <option value="Mourning Leave">Mourning Leave</option>                                        
+                                         <?php
+                                            $sql = "SELECT * FROM tbl_leave_type";
+                                            $query = $conn->query($sql);
+                                            while($row = $query->fetch_assoc()){
+
+                                              ?>
+                                              <option value="<?php echo $row['intLeave_ID']; ?>"><?php echo  strtoupper($row['varLeave_Description']);  ?></option>
+
+                                        <?php } ?>                                           
                                                                
                                     </select>
                                 </div>                                              
@@ -114,7 +115,7 @@ include 'include/database.php';
                               <div class="modal-footer">
 
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button type="submit" name="add_application" class="btn btn-primary">Save changes</button>
+                                <button type="submit" name="add_leave_application" class="btn btn-primary">Save changes</button>
                               </form>                                                                              
                             
                               </div>
@@ -176,7 +177,7 @@ include 'include/database.php';
                                  <form role="form" method="post" enctype = "multipart/form-data" action="query/add_position_query.php">
                                   <div class="form-group">
                                    <label for="exampleInputEmail1">Position</label>   
-                                    <input type="text" class="form-control"  name="position" placeholder="Enter Leave Type" >
+                                    <input type="text" class="form-control"  name="position" placeholder="Enter Position Title" >
                                   </div>
                                   <div class="form-group">
                                    <label for="exampleInputEmail1">Salary Grade</label>
@@ -195,7 +196,7 @@ include 'include/database.php';
 
                                  <div class="form-group">
                                    <label for="exampleInputEmail1">Monthly Salary</label>   
-                                    <input type="text" class="form-control"  name="monthly_salary" placeholder="Enter Leave Type" >
+                                    <input type="text" class="form-control"  name="monthly_salary" placeholder="Enter Monthly Salary" >
                                   </div>
                                    
                                   
@@ -225,6 +226,10 @@ include 'include/database.php';
                                   <div class="form-group">
                                    <label for="exampleInputEmail1">Department</label>   
                                     <input type="text" class="form-control"  name="department" placeholder="Enter Department Name" >
+                                  </div>
+                                  <div class="form-group">
+                                   <label for="exampleInputEmail1">Department ShortName</label>   
+                                    <input type="text" class="form-control"  name="department_Shortname" placeholder="Enter Department Short Name" >
                                   </div>
 <!-- 
                                  <div class="form-group">
@@ -274,7 +279,7 @@ include 'include/database.php';
                                   </div>
                                    <div class="form-group">
                                    <label for="exampleInputEmail1">Date of Holiday</label>   
-                                    <input type="text" class="form-control" id="datepicker1" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask name="holiday_date" placeholder="Enter Holiday Date" >
+                                    <input type="text" class="form-control" id="datepicker7" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask name="holiday_date" placeholder="Enter Holiday Date" >
                                   </div>                                                                
                                   
                               </div>
@@ -335,3 +340,37 @@ include 'include/database.php';
                         <!-- END MODAL SCHEDULE -->
 
             
+                <!-- MODAL FOR LEAVE EARN -->
+                        <div class="modal fade" id="modal-employee-earn-leave">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header alert-warning">
+                                <button type="button " class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Update Monthly Earn Leave</h4>
+                              </div>
+                              <div class="modal-body "> 
+                               <form role="form" method="post" enctype = "multipart/form-data" action="query/update_query.php"> 
+                                <h5>  <center>  Are you sure you want to Update Earn Leave For This Month Of  <strong> <?php print date("M - Y") ;?></strong> ?</center></h5>
+
+                                <div class="form-group">
+                                   <label for="exampleInputEmail1">Vacation Leave</label>   
+                                     <input type="text" class="form-control" id="Vacation_Leave" name="Vacation_Leave" value="1.25" disabled="">
+                                </div>
+                                <div class="form-group">
+                                   <label for="exampleInputEmail1">Sick Leave</label>   
+                                     <input type="text" class="form-control" id="Sick_Leave" name="Sick_Leave" value="1.25" disabled="">
+                                </div>
+                              </div>
+
+
+                                  <div class="modal-footer ">
+                                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                      <button type="submit" name="update_earn_leave" class="btn btn-primary">Leave Earn</button>
+                               </div></form>
+                                  
+                            </div>
+                            <!-- /.modal-content -->
+                          </div>
+                          <!-- /.modal-dialog -->
+                        </div>

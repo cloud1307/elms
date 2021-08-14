@@ -12,8 +12,11 @@
 	$sql = "SELECT a.*,b.*,c.*,d.* FROM tbl_employee a 
 			INNER JOIN tbl_position b ON b.intPosition_ID = a.intPosition_ID
 			INNER JOIN tbl_department d ON d.intDepartment_ID = a.intDepartment_ID
-			INNER JOIN tbl_account c on  a.intEmployee_ID = c.intEmployee_ID
+			INNER JOIN tbl_account c on  c.intEmployee_ID = a.intEmployee_ID
 			WHERE a.intEmployee_ID =  '".$_SESSION['id']."'";
+
+
+
 
 	//$sql = "SELECT * FROM  tbl_account  WHERE intEmployee_ID = '".$_SESSION['id']."'";
 	$query = $conn->query($sql);

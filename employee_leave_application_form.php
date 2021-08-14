@@ -44,21 +44,23 @@
                               <div class="col-md-12">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Leave Type</span></label>   
-                                    <select class="form-control" style="width: 100%;" name="leave_type" id="leave_type" >
+                                    <select class="form-control" style="width: 100%;" name="leave_type" id="leave_type"  onchange="FetchLeaveType(this.value)" >
                                        <option value="0">Select Leave Type</option>
                                        <?php
-                                            $sql = "SELECT * FROM tbl_leave_type";
+                                           
+                                           $sql = "SELECT DISTINCT varLeave_Type FROM `tbl_leave_type`";
                                             $query = $conn->query($sql);
                                             while($row = $query->fetch_assoc()){
 
                                               ?>
-                                              <option value="<?php echo $row['intLeave_ID']; ?>"><?php echo  strtoupper($row['varLeave_Type']);  ?></option>
+                                       
+                                              <option value="<?php echo $row['varLeave_Type']; ?>"><?php echo  strtoupper($row['varLeave_Type']);  ?></option>
 
                                         <?php } ?>
                                       </select> 
                                 </div>                                              
                               </div> 
-
+                              <!-- <option value="<?php echo $row['varLeave_Type']; ?>"><?php echo  strtoupper($row['varLeave_Type']);  ?></option> -->
                                <div class="col-md-12">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Leave Description</span></label>
@@ -66,20 +68,9 @@
                                   <!-- <input type="text" class="form-control"  name="description" id ="description" disabled > -->
 
                                     <select class="form-control" style="width: 100%;" name="description" id="description"  >    
-                                         <!-- <option value="Birthday Leave"><?php echo  strtoupper($row['varLeave_Type']);  ?></option> -->
-
                                         
-                                        <option value="Vacation Leave">Vacation Leave</option>
-                                        <option value="Sick Leave">Sick Leave</option>
-                                        <option value="Solo Parent Leave">Solo Parent Leave</option>
-                                        <option value="Maternity Leave">Maternity Leave</option>
-                                        <option value="Paternity Leave">Paternity Leave</option>
-                                        <option value="Birthday Leave">Birthday Leave</option>
-                                        <option value="Anniversary Leave">Anniversary Leave</option>
-                                        <option value="Domestic Emergency Leave">Domestic Emergency Leave</option>
-                                        <option value="Parental Oblicagation">Parental Oblicagation</option>
-                                        <option value="Graduation Leave">Graduation Leave</option>
-                                        <option value="Mourning Leave">Mourning Leave</option>                                        
+
+                                                                             
                                                                
                                     </select>
                                 </div>
@@ -124,3 +115,24 @@
     <?php include 'include/footer.php'; ?>
   </div> 
   <?php include 'include/scripts.php'; ?>
+
+
+<script type="text/javascript">
+  
+function FetchLeaveType(value){
+   // $('#description').html('');
+   
+    $.ajax({
+      type:'post',
+      url: 'ajax.php',
+      data : { varLeave_Type : value},
+      success : function(data){
+         $('#description').html(data);
+      }
+
+    })
+  }
+
+
+
+</script>

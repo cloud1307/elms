@@ -28,10 +28,26 @@
 
       <form role="form" method="post" id="register_form" action="query/add_employee_query.php" enctype="multipart/form-data">
        
+
+       <?php 
+
+       $maxID = mysqli_query($conn,"SELECT * FROM tbl_employee ORDER BY `intEmployee_ID` DESC LIMIT 1");
+        $maxIDrow = mysqli_fetch_array($maxID);
+       // $maxID "SELECT max(intEmployee_Num) FROM tbl_employee" ;
+      //  $maxIDrow = mysqli_num_rows($maxID);
+
+        $maxIDnumber = $maxIDrow['intEmployee_ID'] +1;
+
+
+
+        ?>
+           <input type="hidden" class="form-control"  name="employee_id" value="<?php echo $maxIDnumber; ?>" required="">
+
+
           <div class="col-md-12">
               <div class="form-group">
                 <label >Employee ID<span class="mb-0 text-primary">*</span></label>
-                <input type="text" class="form-control"  name="employee_id" placeholder="Enter Employee ID" required="">
+                <input type="text" class="form-control"  name="employee_number" placeholder="Enter Employee ID" required="">
              </div>              
          </div>
 
@@ -135,7 +151,7 @@
                             $sql = "SELECT * FROM tbl_position";
                             $query = $conn->query($sql);
                             while($row = $query->fetch_assoc()){
-                              $position = strtoupper($row['varPosition']);
+                              $position = strtoupper($row['varPosition'] ." / ".$row['enumStep_Increment']);
                               ?>
                               <option value="<?php echo $row['intPosition_ID']; ?>"><?php echo  $position;  ?></option>
 
@@ -149,7 +165,7 @@
                       <input type="text" class="form-control" id="datepicker3" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask name="employment_date" placeholder="Enter Employement Date" >
               </div>              
           </div>
-          <div class="col-md-6">
+          <div class="col-md-4">
               <div class="form-group">
                  <label >Work Schedule</label>                   
                 <select class="form-control" style="width: 100%;" name="enumscheduletype"  id="enumscheduletype">                    
@@ -158,7 +174,23 @@
                 </select>
                </div>              
            </div>  
-           <div class="col-md-6">
+
+           <div class="col-md-4">
+              <div class="form-group">
+                <label  class="col-sm-3 control-label">Day Off</label>
+                    <select class="form-control" style="width: 100%;" name="dayoff"  id="dayoff">
+                      <option selected="selected" value="0">N/A</option>
+                      <option value="Monday">Monday</option>
+                      <option value="Tuesday">Tuesday</option>
+                      <option value="Wednesday">Wednesday</option>
+                      <option value="Thursday">Thursday</option>
+                      <option value="Friday">Friday</option>
+                      <option value="Saturday">Saturday</option>
+                      <option value="Saturday-Sunday">Saturday-Sunday</option>
+                      </select> 
+              </div>
+          </div>   
+           <div class="col-md-4">
               <div class="form-group">
                  <label ">UserLevel</label>                   
                 <select class="form-control" style="width: 100%;" name="enumUserLevel"  id="enumUserLevel">

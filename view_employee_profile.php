@@ -41,6 +41,9 @@
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
+                  <b>Day Off</b> <a class="pull-right"><?php echo $emp_user['enumDay_Off'] ; ?></a>
+                </li>
+                <li class="list-group-item">
                   <?php
                     $result1 = mysqli_query($conn,"SELECT a.*, b.* FROM  tbl_leave_balance a INNER JOIN tbl_leave_type b ON a.intLeave_ID = b.intLeave_ID  where a.intEmployee_ID ='$id_session' AND b.varLeave_Type = 'VL' ");
                       $account_user = mysqli_fetch_array($result1);
@@ -55,7 +58,7 @@
                   <b>Sick Leave</b> <a class="pull-right"><?php echo number_format($account_user['Leave_Balance'],2); ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Other Leaves</b> <a class="pull-right">0.0</a>
+                  <b>Other Leaves</b> <a class="pull-right">0.00</a>
                 </li>
               </ul>
 
@@ -72,24 +75,31 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+              <strong><i class="fa fa-calendar margin-r-5"></i> Employement Date</strong>
+
+              <p class="text-muted">
+               <a class="pull-right"> <?php echo date("M d, Y ",strtotime($emp_user['Employment_Date'])) ; ?></a>
+              </p>
+
+              <hr>
               <strong><i class="fa fa-book margin-r-5"></i> Department</strong>
 
               <p class="text-muted">
-                <?php echo $emp_user['varDepartment'] ; ?>
+                <a class="pull-right"><?php echo $emp_user['varDepartment'] ; ?></a>
               </p>
 
               <hr>
 
               <strong><i class="fa fa-map-marker margin-r-5"></i> Salary Grade</strong>
 
-              <p class="text-muted"><?php echo $emp_user['varSalary_Grade'] ; ?></p>
+           <p class="text-muted"><a class="pull-right"><?php echo $emp_user['varSalary_Grade'] ; ?></a></p>
 
               <hr>
 
               <strong><i class="fa fa-pencil margin-r-5"></i> Monthly Salary</strong>
 
               <p>
-                <?php echo "Php " .number_format($emp_user['decimalMonthly_Salary'],2) . " /Month" ; ?>
+                <a class="pull-right"><?php echo "Php " .number_format($emp_user['decimalMonthly_Salary'],2) . " /Month" ; ?></a>
               </p>
 
          

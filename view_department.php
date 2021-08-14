@@ -38,7 +38,7 @@
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th>Department</th>  
-                  <!-- <th>Department Head</th>            -->
+                  <th>Department ShortName</th>           
                   <th>Department Status</th>
                   <th>Action</th>
                 </thead>
@@ -62,7 +62,7 @@
                       ?>
                         <tr>
                           <td><?php echo $deptrow['varDepartment']; ?></td>
-                          <!-- <td><a href="#"><?php echo $employeename ; ?> </a></td> -->
+                          <td><?php echo $deptrow['varDepartment_Shortname'] ; ?></td>
                           <td><?php echo $deptrow['enumStatus'] ; ?></td>
                           <!-- <td><?php echo $row['enumEmployment_Status'] ; ?></td> -->
                         <td>

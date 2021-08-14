@@ -41,28 +41,36 @@
                   <th>Department</th>
                   <th>Position Title</th>                
                   <th>Employment Status</th>
+                  <th>Total Leave</th>
                   <th>Action</th>
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT a.*,b.*,c.*,d.* FROM tbl_employee a 
+                    $sql = "SELECT a.*,b.*,c.*,d.*,e.sumTotalLeave FROM tbl_employee a 
                     INNER JOIN tbl_account d ON d.intEmployee_ID = a.intEmployee_ID
                     INNER JOIN tbl_position b ON a.intPosition_ID = b.intPosition_ID 
                     INNER JOIN tbl_department c ON c.intDepartment_ID = a.intDepartment_ID
+                    INNER JOIN (SELECT intEmployee_ID,SUM(Leave_Balance) AS sumTotalLeave FROM tbl_leave_balance GROUP BY intEmployee_ID) e ON e.intEmployee_ID = a.intEmployee_ID
                     
                     ";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
-                    $emp_id = $row['intEmployee_ID'];
-                     $employeename = strtoupper($row['varLastname'] . " ".$row['varExtension_Name']." ". $row['varFirstname']);                     
+                    $emp_id = $row['intEmployee_number'];
+                     $employeename = strtoupper($row['varLastname'] . " ".$row['varExtension_Name']." ". $row['varFirstname']);
+
+
+
+
 
                       ?>
                         <tr>
                           <td><a href="update_employee_details.php<?php echo '?emp_id='.$emp_id; ?>"><?php echo $employeename ; ?> </a></td>
                           <td><?php echo $row['varUsername']; ?></td>
-                          <td><?php echo $row['varDepartment'] ; ?></td>
-                          <td><?php echo $row['varPosition'] ; ?></td>                                       
+                          <td><?php echo $row['varDepartment_Shortname'] ; ?></td>
+                          <td><?php echo $row['varPosition'] ; ?></td>   
+
                           <td><?php echo $row['enumEmployment_Status'] ; ?>
+
                             <!-- <div class="btn-group">
                                 <button type="button" class="btn btn-default"><?php echo $row['enumEmployment_Status'] ; ?></button>
                                 <button type="button" class="btn btn-information dropdown-toggle" data-toggle="dropdown">
@@ -81,6 +89,7 @@
 
 
                           </td>
+                          <td><?php echo $row['sumTotalLeave'] ; ?></td> 
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default">Action</button>

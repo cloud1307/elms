@@ -113,6 +113,8 @@
 
 
                   ?>
+
+                  
                   <li>
                    <a href="view_leave_application.php">
                       <i class="fa fa-user text-aqua"></i><?php echo $employeename1 ." " . $appleaverow['enumLeave_Status'] ;?> Leave

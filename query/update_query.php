@@ -4,10 +4,11 @@
 
 
 
-// UPDATE QUERY LEAVE TYPE
+// UPDATE QUERY update_account_details
 if(isset($_POST['update_account_details'])){
 	if(isset($_POST['update_account_details'])){
-			
+			//$emp_id=mysqli_real_escape_string($conn,$_POST['emp_id']);
+			//$employee_id=mysqli_real_escape_string($conn,$_POST['intEmployee_ID']);
 			$surname=strtoupper(mysqli_real_escape_string($conn,$_POST['surname']));
             $firstname=strtoupper(mysqli_real_escape_string($conn,$_POST['firstname']));
             $middlename=strtoupper(mysqli_real_escape_string($conn,$_POST['middlename']));
@@ -16,17 +17,20 @@ if(isset($_POST['update_account_details'])){
             $civil_status=mysqli_real_escape_string($conn,$_POST['civil_status']);           
             $date_of_birth = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_of_birth'])));
             $address =strtoupper(mysqli_real_escape_string($conn,$_POST['address']));
-            $department=mysqli_real_escape_string($conn,$_POST['department']);
-            $position=mysqli_real_escape_string($conn,$_POST['position']);
+           $department=mysqli_real_escape_string($conn,$_POST['department']);
+           $position=mysqli_real_escape_string($conn,$_POST['position']);
             $employment_date=date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['employment_date'])));
-            $enumscheduletype=mysqli_real_escape_string($conn,$_POST['enumscheduletype']);
-            $enumUserLevel=mysqli_real_escape_string($conn,$_POST['enumUserLevel']);
-              
+           $enumWork_Schedule=mysqli_real_escape_string($conn,$_POST['enumWork_Schedule']);
+             $Day_Off=mysqli_real_escape_string($conn,$_POST['Day_Off']);
+          $enumUserLevel=mysqli_real_escape_string($conn,$_POST['enumUserLevel']);
+         
+
+        if($userlevel=="HR Manager") {
 	
-		   $sql = "UPDATE  tbl_employee SET varFirstname = '$firstname' , varMiddlename = '$middlename', varLastname = '$surname', enumGender = '$gender', varExtension_Name = '$extension' , enumCivil_Status = '$civil_status', Birth_Date = '$date_of_birth', intPosition_ID = '$position', varAddress = '$address', intDepartment_ID = '$department',  Employment_Date = '$employment_date', enumWork_Schedule = '$enumscheduletype'  WHERE  intEmployee_ID = '$id_session' "; 
-             
-          
-		
+		   $sql = "UPDATE  tbl_employee SET varFirstname = '$firstname' , varMiddlename = '$middlename', varLastname = '$surname', enumGender = '$gender', varExtension_Name = '$extension' , enumCivil_Status = '$civil_status', Birth_Date = '$date_of_birth', intPosition_ID = '$position', varAddress = '$address', intDepartment_ID = '$department',  Employment_Date = '$employment_date', enumWork_Schedule = '$enumWork_Schedule',enumDay_Off = '$Day_Off'  WHERE  intEmployee_ID  = '$id_session' "; 
+             }else{
+           $sql = "UPDATE  tbl_employee SET varFirstname = '$firstname' , varMiddlename = '$middlename', varLastname = '$surname', enumGender = '$gender', varExtension_Name = '$extension' , enumCivil_Status = '$civil_status', Birth_Date = '$date_of_birth', varAddress = '$address'  WHERE  intEmployee_ID  = '$id_session' "; 
+		}
 		 	//enumEmployment_Status = 'Active'
 		 	if($conn->query($sql)){
 		            $_SESSION['success'] = 'Your Details Successfully Updated';
@@ -51,15 +55,15 @@ if(isset($_POST['update_account_details'])){
 
 
 
-
-
-
-
-// UPDATE QUERY LEAVE TYPE
+// UPDATE QUERY update_employee_details
 if(isset($_POST['update_employee_details'])){
 	if(isset($_POST['update_employee_details'])){
 
 			$emp_id = mysqli_real_escape_string($conn,$_POST['emp_id']);
+			$username=mysqli_real_escape_string($conn,$_POST['username']);
+            $password=mysqli_real_escape_string($conn,$_POST['password']);
+
+			$employee_num=mysqli_real_escape_string($conn,$_POST['employee_num']);
 			$surname=strtoupper(mysqli_real_escape_string($conn,$_POST['surname']));
             $firstname=strtoupper(mysqli_real_escape_string($conn,$_POST['firstname']));
             $middlename=strtoupper(mysqli_real_escape_string($conn,$_POST['middlename']));
@@ -71,16 +75,17 @@ if(isset($_POST['update_employee_details'])){
             $department=mysqli_real_escape_string($conn,$_POST['department']);
             $position=mysqli_real_escape_string($conn,$_POST['position']);
             $employment_date=date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['employment_date'])));
-            $enumscheduletype=mysqli_real_escape_string($conn,$_POST['enumscheduletype']);
+            $enumWork_Schedule=mysqli_real_escape_string($conn,$_POST['enumWork_Schedule']);
+            $Day_Off=mysqli_real_escape_string($conn,$_POST['Day_Off']);
             $enumUserLevel=mysqli_real_escape_string($conn,$_POST['enumUserLevel']);
               
 	
-		   $sql = "UPDATE  tbl_employee SET varFirstname = '$firstname' , varMiddlename = '$middlename', varLastname = '$surname', enumGender = '$gender', varExtension_Name = '$extension' , enumCivil_Status = '$civil_status', Birth_Date = '$date_of_birth', intPosition_ID = '$position', varAddress = '$address', intDepartment_ID = '$department',  Employment_Date = '$employment_date', enumWork_Schedule = '$enumscheduletype'  WHERE  intEmployee_ID = '$emp_id' "; 
+		    $sql = "UPDATE  tbl_employee SET intEmployee_number = '$employee_num', varFirstname = '$firstname' , varMiddlename = '$middlename', varLastname = '$surname', enumGender = '$gender', varExtension_Name = '$extension' , enumCivil_Status = '$civil_status', Birth_Date = '$date_of_birth', intPosition_ID = '$position', varAddress = '$address', intDepartment_ID = '$department',  Employment_Date = '$employment_date', enumWork_Schedule = '$enumWork_Schedule', enumDay_Off = '$Day_Off'  WHERE  intEmployee_ID = '$emp_id' "; 
              
-          
+          $sql1 = "UPDATE tbl_account SET varUsername = '$username', varPassword = '$password' , enumUser_Level = '$enumUserLevel' WHERE intEmployee_ID = '$emp_id' ";
 		
 		 	//enumEmployment_Status = 'Active'
-		 	if($conn->query($sql)){
+		 	if($conn->query($sql) AND $conn->query($sql1)){
 		            $_SESSION['success'] = 'Update Employee Details Successfully';
 		        }
 		        else{
@@ -159,8 +164,9 @@ if(isset($_POST['update_department'])){
 
 		$depart_id = mysqli_real_escape_string($conn,$_POST['depart_id']);	
 		$department=strtoupper(mysqli_real_escape_string($conn,$_POST['department']));
+		$department_shortname=strtoupper(mysqli_real_escape_string($conn,$_POST['department_shortname']));
 
-		$sql = "UPDATE tbl_department SET varDepartment = '$department'  WHERE intDepartment_ID = '$depart_id' ";
+		$sql = "UPDATE tbl_department SET varDepartment = '$department', varDepartment_Shortname = '$department_shortname'  WHERE intDepartment_ID = '$depart_id' ";
 		    	 
 		 
 		 	if($conn->query($sql)){
@@ -214,7 +220,7 @@ if(isset($_POST['update_leave_type'])){
 
 		$leave_id = mysqli_real_escape_string($conn,$_POST['leave_id']);	
 		$leave_type=strtoupper(mysqli_real_escape_string($conn,$_POST['leave_type']));
-         $leave_description=strtoupper(mysqli_real_escape_string($conn,$_POST['leave_description']));
+        $leave_description=strtoupper(mysqli_real_escape_string($conn,$_POST['leave_description']));
 	
 		    	 
 		  $sql = "UPDATE  tbl_leave_type SET varLeave_Type = '$leave_type' , varLeave_Description = '$leave_description' WHERE intLeave_ID = '$leave_id' ";
@@ -338,5 +344,75 @@ if(isset($_POST['compute_leave'])){
 
 
 
+if(isset($_POST['update_leave_application'])){
+    if(isset($_POST['update_leave_application'])){
+
+    	$application_id = mysqli_real_escape_string($conn,$_POST['application_id']);
+		$date_from = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_from'])));
+     	$date_to = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_to'])));
+     	$leave_type=mysqli_real_escape_string($conn,$_POST['description']);
+     	//$description=mysqli_real_escape_string($conn,$_POST['description']);
+     	$leave_description=mysqli_real_escape_string($conn,$_POST['leave_description']);
+
+     	// $sqlupdateleave = "UPDATE tbl_leave_application SET intLeave_ID = '$leave_type', varDescription_Leave = '$description', Inclusive_Date_From = '$date_from', Inclusive_Date_To = '$date_to', enumLeave_Process = '$leave_description' WHERE intApplication_ID ='$application_id' ";
+     	$sqlupdateleave = "UPDATE tbl_leave_application SET intLeave_ID = '$leave_type',  Inclusive_Date_From = '$date_from', Inclusive_Date_To = '$date_to', enumLeave_Process = '$leave_description' WHERE intApplication_ID ='$application_id' ";
+
+
+     	 	 	if($conn->query($sqlupdateleave) ){
+		            $_SESSION['success'] = 'Leave Successfully Updated';
+		        }
+		        else{
+		            $_SESSION['error'] = $conn->error;
+		        }
+
+		    }
+		    else{
+		        $_SESSION['error'] = 'Fill up add form first';
+		    }
+
+		 
+		  
+
+
+
+		 	
+
+		     header('location: ../view_leave_application.php');
+	
+}
+
+
+
+
+if(isset($_POST['update_earn_leave'])){
+    if(isset($_POST['update_earn_leave'])){
+
+    	$sqlEarnCredits = "UPDATE tbl_leave_balance SET Leave_Balance = Leave_Balance + 1.25 WHERE intEmployee_ID IN (SELECT intEmployee_ID FROM tbl_employee WHERE enumEmployment_Status = 'Active') ";
+
+
+
+			if($conn->query($sqlEarnCredits) ){
+		            $_SESSION['success'] = 'Leave Successfully Credit';
+		        }
+		        else{
+		            $_SESSION['error'] = $conn->error;
+		        }
+
+		    }
+		    else{
+		        $_SESSION['error'] = 'Fill up add form first';
+		    }
+
+		 
+		  
+
+
+
+		 	
+
+		     header('location: ../view_leave_earn.php');
+
+
+}
 
 	?>
