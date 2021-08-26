@@ -80,7 +80,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="view_employee.php"><i class="fa fa-circle-o"></i> Employee List</a></li>
+            <li><a href="view_employee.php"><i class="fa fa-circle-o"></i> Employee List</a></li>            
             <li><a href="view_department.php"><i class="fa fa-circle-o"></i> Department</a></li>
             <li><a href="view_position.php"><i class="fa fa-circle-o"></i> Position</a></li> 
           </ul>

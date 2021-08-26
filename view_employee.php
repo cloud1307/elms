@@ -28,7 +28,7 @@
         <div class="box-body">
          
          <div class="row">
-        <div class="col-xs-12">
+          <div class="col-xs-12">
         
             <div class="box-header with-border">
                <a href="add_employee.php"  class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New Employee</a>
@@ -46,17 +46,19 @@
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT a.*,b.*,c.*,d.*,e.sumTotalLeave FROM tbl_employee a 
+                    $sql = "SELECT a.*,b.*,c.*,d.*,e.sumTotalLeave,f.* FROM tbl_employee a 
                     INNER JOIN tbl_account d ON d.intEmployee_ID = a.intEmployee_ID
                     INNER JOIN tbl_position b ON a.intPosition_ID = b.intPosition_ID 
                     INNER JOIN tbl_department c ON c.intDepartment_ID = a.intDepartment_ID
+                    INNER JOIN tbl_salary_grade f on f.intPosition_ID = a.intPosition_ID
                     INNER JOIN (SELECT intEmployee_ID,SUM(Leave_Balance) AS sumTotalLeave FROM tbl_leave_balance GROUP BY intEmployee_ID) e ON e.intEmployee_ID = a.intEmployee_ID
                     
                     ";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                     $emp_id = $row['intEmployee_number'];
-                     $employeename = strtoupper($row['varLastname'] . " ".$row['varExtension_Name']." ". $row['varFirstname']);
+                    $emp_number = $row['intEmployee_ID'];
+                    $employeename = strtoupper($row['varLastname'] . " ".$row['varExtension_Name']." ". $row['varFirstname']);
 
 
 
@@ -99,7 +101,7 @@
                                 </button>
                                 <ul class="dropdown-menu" role="menu">                         
                                   <li><a href="#" >View Balance Leave</a></li>
-                                  <li><a href="#" >View Leave Record</a></li>
+                                  <li><a href="service_record.php<?php echo '?emp_number='.$emp_number; ?>" >View Service Record</a></li>
                                   <li><a href="update_employee_details.php<?php echo '?emp_id='.$emp_id; ?>" >Edit</a></li>
                                   <li><a href="#" >Delete</a></li>
                                 </ul>

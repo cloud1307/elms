@@ -72,7 +72,6 @@
 
 
 
-
 <!-- page script -->
 <script type = "text/javascript">
   function confirmationDelete(anchor){

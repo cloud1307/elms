@@ -10,10 +10,11 @@
 
 
 
-    $result = mysqli_query($conn, "SELECT a.*,b.*,c.*,d.* FROM tbl_employee a 
+    $result = mysqli_query($conn, "SELECT a.*,b.*,c.*,d.*,e.* FROM tbl_employee a 
       RIGHT JOIN tbl_account b ON a.intEmployee_ID = b.intEmployee_ID
        INNER JOIN tbl_position c ON c.intPosition_ID = a.intPosition_ID 
        INNER JOIN tbl_department d ON d.intDepartment_ID = a.intDepartment_ID
+       INNER JOIN tbl_salary_grade e on a.intPosition_ID = e.intPosition_ID
 
 
       WHERE a.intEmployee_number =$emp_id");
@@ -170,14 +171,14 @@
               </div>
           </div> 
 
-          <div class="col-md-6">
+          <div class="col-md-4">
               <div class="form-group">
                 <label  class="col-sm-3 control-label">Position</label>
                     <select class="form-control" style="width: 100%;" name="position"  id="position">
                       <option selected="selected" value="<?php echo strtoupper($emp_row['intPosition_ID']); ?>"><?php echo strtoupper($emp_position); ?></option>
                        
                        <?php
-                            $sql = "SELECT * FROM tbl_position";
+                            $sql = "SELECT a.*, b.* FROM tbl_position a INNER JOIN tbl_salary_grade b ON a.intPosition_ID = b.intPosition_ID ";
                             $query = $conn->query($sql);
                             while($row = $query->fetch_assoc()){
                                $position = strtoupper($row['varPosition'] ." / ".$row['enumStep_Increment']);
@@ -188,12 +189,26 @@
                       </select> 
               </div>
           </div>   
-          <div class="col-md-6">
+          <div class="col-md-4">
               <div class="form-group">
                   <label for="exampleInputEmail1">Employment Date</label>   
                      <input type="text" class="form-control" id="datepicker3" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask name="employment_date" placeholder="Enter Employement Date" value="<?php echo date('m/d/Y',strtotime($emp_row['Employment_Date'])); ?>" >
               </div>              
           </div>
+          <div class="col-md-4">
+              <div class="form-group">
+                <label  class="col-sm-3 control-label">Job Status</label>
+                    <select class="form-control" style="width: 100%;" name="jobStatus"  id="jobStatus">
+                     <option selected="selected" value="<?php echo $emp_row['enumJob_Status']; ?>"><?php echo $emp_row['enumJob_Status']; ?></option>
+                      <option value="Job Contract">Job Contract</option>
+                      <option value="Casual">Casual</option>
+                      <option value="Regular">Regular</option>
+                      <option value="Co-Terminus">Co-Terminus</option>                      
+                      </select> 
+              </div>
+          </div>
+
+
           <div class="col-md-4">
               <div class="form-group">
                  <label >Work Schedule</label>                   

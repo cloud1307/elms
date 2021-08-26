@@ -75,12 +75,13 @@ if(isset($_POST['update_employee_details'])){
             $department=mysqli_real_escape_string($conn,$_POST['department']);
             $position=mysqli_real_escape_string($conn,$_POST['position']);
             $employment_date=date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['employment_date'])));
+            $jobStatus=mysqli_real_escape_string($conn,$_POST['jobStatus']);
             $enumWork_Schedule=mysqli_real_escape_string($conn,$_POST['enumWork_Schedule']);
             $Day_Off=mysqli_real_escape_string($conn,$_POST['Day_Off']);
             $enumUserLevel=mysqli_real_escape_string($conn,$_POST['enumUserLevel']);
               
 	
-		    $sql = "UPDATE  tbl_employee SET intEmployee_number = '$employee_num', varFirstname = '$firstname' , varMiddlename = '$middlename', varLastname = '$surname', enumGender = '$gender', varExtension_Name = '$extension' , enumCivil_Status = '$civil_status', Birth_Date = '$date_of_birth', intPosition_ID = '$position', varAddress = '$address', intDepartment_ID = '$department',  Employment_Date = '$employment_date', enumWork_Schedule = '$enumWork_Schedule', enumDay_Off = '$Day_Off'  WHERE  intEmployee_ID = '$emp_id' "; 
+		    $sql = "UPDATE  tbl_employee SET intEmployee_number = '$employee_num', varFirstname = '$firstname' , varMiddlename = '$middlename', varLastname = '$surname', enumGender = '$gender', varExtension_Name = '$extension' , enumCivil_Status = '$civil_status', Birth_Date = '$date_of_birth', intPosition_ID = '$position', varAddress = '$address', intDepartment_ID = '$department',  Employment_Date = '$employment_date', enumJob_Status = '$jobStatus', enumWork_Schedule = '$enumWork_Schedule', enumDay_Off = '$Day_Off'  WHERE  intEmployee_ID = '$emp_id' "; 
              
           $sql1 = "UPDATE tbl_account SET varUsername = '$username', varPassword = '$password' , enumUser_Level = '$enumUserLevel' WHERE intEmployee_ID = '$emp_id' ";
 		
@@ -165,8 +166,9 @@ if(isset($_POST['update_department'])){
 		$depart_id = mysqli_real_escape_string($conn,$_POST['depart_id']);	
 		$department=strtoupper(mysqli_real_escape_string($conn,$_POST['department']));
 		$department_shortname=strtoupper(mysqli_real_escape_string($conn,$_POST['department_shortname']));
+		$departStatus=strtoupper(mysqli_real_escape_string($conn,$_POST['enumStatus']));
 
-		$sql = "UPDATE tbl_department SET varDepartment = '$department', varDepartment_Shortname = '$department_shortname'  WHERE intDepartment_ID = '$depart_id' ";
+		$sql = "UPDATE tbl_department SET varDepartment = '$department', varDepartment_Shortname = '$department_shortname', enumStatus = '$departStatus'  WHERE intDepartment_ID = '$depart_id' ";
 		    	 
 		 
 		 	if($conn->query($sql)){
@@ -189,13 +191,17 @@ if(isset($_POST['update_department'])){
 if(isset($_POST['update_position'])){
 			if(isset($_POST['update_position'])){
 
-		$position_id = mysqli_real_escape_string($conn,$_POST['position_id']);	
+		$salary_id = mysqli_real_escape_string($conn,$_POST['salary_id']);	
 		$position=strtoupper(mysqli_real_escape_string($conn,$_POST['position']));
 	 	$salary_grade=mysqli_real_escape_string($conn,$_POST['salary_grade']);
 	 	$stepincrement=mysqli_real_escape_string($conn,$_POST['stepincrement']);
 	 	$monthly_salary=mysqli_real_escape_string($conn,$_POST['monthly_salary']);
 
-		$sql = "UPDATE  tbl_position SET varPosition = '$position', varSalary_Grade = '$salary_grade', enumStep_Increment = '$stepincrement', decimalMonthly_Salary = '$monthly_salary' WHERE intPosition_ID = '$position_id' ";
+	 	$sql ="UPDATE tbl_position LEFT OUTER JOIN tbl_salary_grade ON tbl_position.intPosition_ID = tbl_salary_grade.intPosition_ID SET tbl_position.varPosition = '$position', tbl_salary_grade.varSalary_Grade = '$salary_grade', tbl_salary_grade.enumStep_Increment = '$stepincrement',
+	 		tbl_salary_grade.decimalMonthly_Salary = '$monthly_salary'
+	 	 WHERE  tbl_salary_grade.intSalary_ID = '$salary_id' ";
+
+		//$sql = "UPDATE  tbl_position SET varPosition = '$position', varSalary_Grade = '$salary_grade', enumStep_Increment = '$stepincrement', decimalMonthly_Salary = '$monthly_salary' WHERE intPosition_ID = '$position_id' ";
 		    	 
 		 
 		 	if($conn->query($sql)){
@@ -387,21 +393,60 @@ if(isset($_POST['update_leave_application'])){
 if(isset($_POST['update_earn_leave'])){
     if(isset($_POST['update_earn_leave'])){
 
-    	$sqlEarnCredits = "UPDATE tbl_leave_balance SET Leave_Balance = Leave_Balance + 1.25 WHERE intEmployee_ID IN (SELECT intEmployee_ID FROM tbl_employee WHERE enumEmployment_Status = 'Active') ";
+    	$Vacation_Leave=mysqli_real_escape_string($conn,$_POST['Vacation_Leave']);
+      //  $Sick_Leave=mysqli_real_escape_string($conn,$_POST['Sick_Leave']);
+
+        	
+                   
+			
+			 for ($i=0; $i < 247 ; $i++) { 
+			 	$SqlSelectEmployee = "SELECT * FROM tbl_employee where enumEmployment_Status ='Active' ";        	
+    			$queryEarnLeave = $conn->query($SqlSelectEmployee);
+                   while($row = $queryEarnLeave->fetch_assoc()){
+                   $emp_id = $row['intEmployee_ID'];
+                    $sqlLeaveEarn = "INSERT INTO tbl_earn_leave (intEmployee_ID,Credit_Earn,Date_UpdateEarn) VALUES ('$emp_id', '$Vacation_Leave', CURDATE())";
+
+                                 
+               } 
+
+                	if($conn->query($sqlLeaveEarn)){
+		                $_SESSION['success'] = ' Leave Application Successfully Applied';
+		            }
+		            else{
+		                $_SESSION['error'] = $conn->error;
+		            }  
+          }		
+	}
+			
+
+
+		// if($conn->query($sqlLeaveEarn)){
+  //               $_SESSION['success'] = ' Leave Application Successfully Applied';
+  //           }
+  //           else{
+  //               $_SESSION['error'] = $conn->error;
+  //           }
+
+  //       }
+  //       else{
+  //           $_SESSION['error'] = 'Fill up add form first';
+  //       }
+
+   //  	$sqlEarnCredits = "UPDATE tbl_leave_balance SET Leave_Balance = Leave_Balance + 1.25 WHERE intEmployee_ID IN (SELECT intEmployee_ID FROM tbl_employee WHERE enumEmployment_Status = 'Active') ";
 
 
 
-			if($conn->query($sqlEarnCredits) ){
-		            $_SESSION['success'] = 'Leave Successfully Credit';
-		        }
-		        else{
-		            $_SESSION['error'] = $conn->error;
-		        }
+			// if($conn->query($sqlEarnCredits) ){
+		 //            $_SESSION['success'] = 'Leave Successfully Credit';
+		 //        }
+		 //        else{
+		 //            $_SESSION['error'] = $conn->error;
+		 //        }
 
-		    }
-		    else{
-		        $_SESSION['error'] = 'Fill up add form first';
-		    }
+		 //    }
+		 //    else{
+		 //        $_SESSION['error'] = 'Fill up add form first';
+		 //    }
 
 		 
 		  

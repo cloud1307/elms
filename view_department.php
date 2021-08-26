@@ -46,7 +46,8 @@
                   <?php
                     // $sql = "SELECT a.*, b.*, c.*  FROM tbl_department a INNER JOIN tbl_employee b  ON a.intDepartment_ID = b.intDepartment_ID 
                     // INNER JOIN tbl_account c ON c.intEmployee_ID = b.intEmployee_ID  WHERE enumUser_Level = 'Department Head' ";
-                  $sql = "SELECT *  FROM tbl_department WHERE enumStatus = 'Active' ";
+                 // $sql = "SELECT *  FROM tbl_department WHERE enumStatus = 'Active' ";
+                  $sql = "SELECT *  FROM tbl_department ";
                     $query3 = $conn->query($sql);
                     while($deptrow = $query3->fetch_assoc()){
 

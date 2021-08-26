@@ -91,8 +91,8 @@ if(isset($_POST['delete_position'])){
 
     //$get_id=$_GET['intWorkSched_ID'];
 
-    $position_id = mysqli_real_escape_string($conn,$_POST['position_id']);
-    $sql ="DELETE FROM tbl_position WHERE intPosition_ID = '$position_id'";
+    $salary_id = mysqli_real_escape_string($conn,$_POST['salary_id']);
+    $sql ="DELETE FROM tbl_salary_grade WHERE intSalary_ID = '$salary_id'";
     
 
 

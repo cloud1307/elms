@@ -40,26 +40,46 @@
             <div class="box-body">
               <table id="dataleave" class="table table-bordered">
                 <thead>
-                  <th><input type="checkbox" name="select_all" value="1" id="example-select-all"></th>          
+                  <th><input type="checkbox" name="select_all" value="1" id="example-select-all"></th>
+                  <th>Earn ID</th>          
                   <th>Date Update</th>
-                  <!-- <th>Leave Type Earn</th> -->
-                  <th>Number Of Leave Earn</th>               
+                  <th>Leave Type Earn</th>                                 
                   
                   <th>Action</th>
                 </thead>
                 <tbody>
                 
-                        <tr>
-                        <td>N/A</td>                       
-                          <td>#</td>
-                          <td>#</td>
-                                                  
-                         
-                                                                                   
-                        <td>#</div>
+                  <?php
+                    $sqlEarn = "SELECT * FROM tbl_earn_leave ";
+                    $queryEarn = $conn->query($sqlEarn);
+                    while($leaveEarnRow = $queryEarn->fetch_assoc()){                                                        
 
-                        </td>
+                      ?>
+                        <tr> 
+                             <td><input type="checkbox" name="intEarn_ID" value="<?php echo  $leaveEarnRow['intEarn_ID']; ?>">
+                            <td><?php echo $leaveEarnRow['intEarn_ID']; ?></td>
+                            <td><?php echo $leaveEarnRow['Date_UpdateEarn'] ; ?></td>                         
+                            <td><?php echo $leaveEarnRow['Credit_Earn']; ?></td>
+                              
+
+                          <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default">Action</button>
+                                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                                  <span class="caret"></span>
+                                  <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">                         
+                                  <li><a href="#edit-modal-leave<?php echo $leaveEarnRow['intEarn_ID']; ?>" data-toggle="modal" >Edit</a></li>
+                                  <li><a href="#delete-modal-leave<?php echo $leaveEarnRow['intEarn_ID']; ?>" data-toggle="modal" >Delete</a></li>
+                                </ul>
+                          </div> 
+                          </td>
                         </tr>
+                        <?php include 'modal/modal_update.php' ?>
+                      <?php
+                    }
+                  ?>
                    
                 </tbody>
               </table>

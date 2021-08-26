@@ -130,7 +130,7 @@
                     <select class="form-control" style="width: 100%;" name="department"  id="department">
                       <option selected="selected" value="0">N/A</option>
                        <?php
-                            $sql = "SELECT * FROM tbl_department";
+                            $sql = "SELECT * FROM tbl_department WHERE enumStatus = 'Active' ";
                             $query = $conn->query($sql);
                             while($row = $query->fetch_assoc()){
                               $department = strtoupper($row['varDepartment']);
@@ -142,13 +142,13 @@
               </div>
           </div> 
 
-          <div class="col-md-6">
+          <div class="col-md-4">
               <div class="form-group">
                 <label  class="col-sm-3 control-label">Position</label>
                     <select class="form-control" style="width: 100%;" name="position"  id="position">
                       <option selected="selected" value="0">N/A</option>
                        <?php
-                            $sql = "SELECT * FROM tbl_position";
+                            $sql = "SELECT a.*, b.* FROM tbl_position a INNER JOIN tbl_salary_grade b ON a.intPosition_ID = b.intPosition_ID ";
                             $query = $conn->query($sql);
                             while($row = $query->fetch_assoc()){
                               $position = strtoupper($row['varPosition'] ." / ".$row['enumStep_Increment']);
@@ -159,11 +159,22 @@
                       </select> 
               </div>
           </div>   
-          <div class="col-md-6">
+          <div class="col-md-4">
               <div class="form-group">
                   <label for="exampleInputEmail1">Employment Date</label>   
                       <input type="text" class="form-control" id="datepicker3" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask name="employment_date" placeholder="Enter Employement Date" >
               </div>              
+          </div>
+          <div class="col-md-4">
+              <div class="form-group">
+                <label  class="col-sm-3 control-label">Job Status</label>
+                    <select class="form-control" style="width: 100%;" name="jobStatus"  id="jobStatus">                      
+                      <option value="Job Contract">Job Contract</option>
+                      <option value="Casual">Casual</option>
+                      <option value="Regular">Regular</option>
+                      <option value="Co-Terminus">Co-Terminus</option>                      
+                      </select> 
+              </div>
           </div>
           <div class="col-md-4">
               <div class="form-group">

@@ -65,9 +65,10 @@
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Leave Description</span></label>
 
-                                  <!-- <input type="text" class="form-control"  name="description" id ="description" disabled > -->
+                                 
 
-                                    <select class="form-control" style="width: 100%;" name="description" id="description"  >    
+                                    <select class="form-control" style="width: 100%;" name="description" id="description"  > 
+                                      <option value="0">Leave Description</option>  
                                         
 
                                                                              

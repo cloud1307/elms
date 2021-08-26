@@ -5,7 +5,7 @@ include 'include/database.php';
 ?>
 
 
-                             <!--MODAL FOR APPLY LEAVE  -->
+                    <!--MODAL FOR APPLY LEAVE  -->
                         <div class="modal fade" id="modal-employee-apply-leave">
                           <div class="modal-dialog">
                             <div class="modal-content">
@@ -21,7 +21,7 @@ include 'include/database.php';
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Employee Name</label>   
                                       
-                                      <select class="form-control select2" style="width: 100%;">
+                                      <select class="form-control select2" style="width: 100%;"   name="emp_id" id="emp_id">
                                          <?php
                                           //  $sql1 = "SELECT a.*, b.* FROM tbl_employee a INNER JOIN tbl_department b ON b.intDepartment_ID = a.intDepartment_ID WHERE a.intDepartment_ID = '$dpartment_id' ";
                                             $sql1 = "SELECT a.*, b.* FROM tbl_employee a INNER JOIN tbl_department b ON b.intDepartment_ID = a.intDepartment_ID WHERE a.enumEmployment_Status = 'Active'";
@@ -55,42 +55,28 @@ include 'include/database.php';
                               <div class="col-md-12">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Leave Type</span></label>   
-                                    <select class="form-control" style="width: 100%;" name="leave_type" id="leave_type" >
+                                      <select class="form-control" style="width: 100%;" name="leave_type" id="leave_type"  onchange="FetchLeaveType(this.value)" >
                                        <option selected="" disabled="" >Select Leave Type</option>
                                        <?php
                                             //$sql = "SELECT * FROM tbl_leave_type";
-                                             $sql = "SELECT DISTINCT varLeave_Type FROM `tbl_leave_type`";
+                                             $sql = "SELECT DISTINCT varLeave_Type FROM tbl_leave_type";
                                             $query = $conn->query($sql);
                                             while($row = $query->fetch_assoc()){
 
                                               ?>
-                                              <option value="<?php echo $row['varLeave_Type']; ?>"><?php echo  strtoupper($row['varLeave_Type']);  ?></option>
+                                              <option value="<?php echo $row['varLeave_Type']; ?>"><?php echo  $row['varLeave_Type'];  ?></option>
 
                                         <?php } ?>
                                       </select> 
                                 </div>                                              
+
                               </div> 
 
                                <div class="col-md-12">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1">Leave Description</span></label>
-
-                                  <!-- <input type="text" class="form-control"  name="description" id ="description" disabled > -->
-
-                                    <select class="form-control" style="width: 100%;" name="description" id="description"  >    
-                                         <!-- <option value="Birthday Leave"><?php echo  strtoupper($row['varLeave_Type']);  ?></option> -->
-
-                                        
-                                         <?php
-                                            $sql = "SELECT * FROM tbl_leave_type";
-                                            $query = $conn->query($sql);
-                                            while($row = $query->fetch_assoc()){
-
-                                              ?>
-                                              <option value="<?php echo $row['intLeave_ID']; ?>"><?php echo  strtoupper($row['varLeave_Description']);  ?></option>
-
-                                        <?php } ?>                                           
-                                                               
+                                  <label for="exampleInputEmail1">Leave Description</span></label> 
+                                    <select class="form-control" style="width: 100%;" name="description" id="description"  >  
+                                                             
                                     </select>
                                 </div>                                              
                               </div>
@@ -179,6 +165,7 @@ include 'include/database.php';
                                    <label for="exampleInputEmail1">Position</label>   
                                     <input type="text" class="form-control"  name="position" placeholder="Enter Position Title" >
                                   </div>
+                                  
                                   <div class="form-group">
                                    <label for="exampleInputEmail1">Salary Grade</label>
                                     <input type="text" class="form-control" id="salary_grade" name="salary_grade" data-inputmask='"mask": "(99-9)"' data-mask>
@@ -199,6 +186,10 @@ include 'include/database.php';
                                     <input type="text" class="form-control"  name="monthly_salary" placeholder="Enter Monthly Salary" >
                                   </div>
                                    
+                                   <div class="modal-footer ">                                      
+                                      <button type="button" name="add" id="add" class="btn btn-primary">Add</button>
+                                    </form>
+                                  </div>
                                   
                               </div>
                                   <div class="modal-footer ">
@@ -262,7 +253,7 @@ include 'include/database.php';
                         </div>
 
 
-                         <!-- MODAL HOLIDAY -->
+                      <!-- MODAL HOLIDAY -->
                         <div class="modal fade" id="modal-holiday">
                           <div class="modal-dialog">
                             <div class="modal-content">
@@ -374,3 +365,21 @@ include 'include/database.php';
                           </div>
                           <!-- /.modal-dialog -->
                         </div>
+
+
+<script type="text/javascript">
+  
+function FetchLeaveType(value){
+    $('#description').html('');
+   
+    $.ajax({
+      type:'post',
+      url: 'ajax.php',
+      data : { varLeave_Type : value},
+      success : function(data){
+         $('#description').html(data);
+      }
+
+    })
+  }
+</script>

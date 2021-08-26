@@ -1,4 +1,5 @@
-                       <!-- MODAL FOR LEAVE TYPE -->
+
+                   <!-- MODAL FOR LEAVE TYPE -->
                         <div class="modal fade" id="edit-modal-leave<?php echo $leaverow['intLeave_ID']; ?>">
                           <div class="modal-dialog">
                             <div class="modal-content">
@@ -77,7 +78,7 @@
 
 
                     <!--MODAL FOR POSITION  -->
-                        <div class="modal fade" id="edit-modal-position<?php echo $positionrow['intPosition_ID']; ?>">
+                        <div class="modal fade" id="edit-modal-position<?php echo $positionrow['intSalary_ID']; ?>">
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header alert-success">
@@ -87,18 +88,19 @@
                               </div>
                               <div class="modal-body ">
                               <?php 
-                                 $editposition=mysqli_query($conn,"SELECT * FROM tbl_position where intPosition_ID='".$positionrow['intPosition_ID']."'");
+                                 $editposition=mysqli_query($conn,"SELECT a.*, b.* FROM tbl_salary_grade  a INNER JOIN tbl_position b ON a.intPosition_ID = b.intPosition_ID  where a.intSalary_ID='".$positionrow['intSalary_ID']."'");
+
                                   $epostrow=mysqli_fetch_array($editposition);
                               ?>                                
                                  <form role="form" method="post" enctype = "multipart/form-data" action="query/update_query.php">
 
-                                  <input type="hidden" class="form-control"  name="position_id"   value="<?php echo $positionrow['intPosition_ID'] ; ?>" >
+                                  <input type="hidden" class="form-control"  name="salary_id"   value="<?php echo $positionrow['intSalary_ID'] ; ?>" >
                                   <div class="form-group">
                                    <label for="exampleInputEmail1">Position</label>   
                                     <input type="text" class="form-control"  name="position" placeholder="Enter Position Title" value="<?php echo $epostrow['varPosition'] ; ?>" >
                                   </div>
                                   <div class="form-group">
-                                   <label for="exampleInputEmail1">Salary Grade</label>
+                                   <label for="exampleInputEmail1">Salary Grade <b>(eg. 01-1)</b></label>
                                     <input type="text" class="form-control" id="salary_grade" name="salary_grade" data-inputmask='"mask": "(99-9)"' data-mask value="<?php echo $epostrow['varSalary_Grade'] ; ?>">
                                   </div>
                                  
@@ -133,7 +135,7 @@
 
                         <!-- DELETE MODAL POSITION -->
 
-                        <div class="modal fade" id="delete-modal-position<?php echo $positionrow['intPosition_ID']; ?>"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="delete-modal-position<?php echo $positionrow['intSalary_ID']; ?>"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                           <div class="modal-dialog" >
                             <div class="modal-content">
                               <div class="modal-header alert-danger">
@@ -143,7 +145,7 @@
                               </div>
                               <?php
                                  
-                                  $delposition=mysqli_query($conn,"SELECT * FROM tbl_position where intPosition_ID='".$positionrow['intPosition_ID']."'");
+                                  $delposition=mysqli_query($conn,"SELECT a.*, b.* FROM tbl_salary_grade  a INNER JOIN tbl_position b ON a.intPosition_ID = b.intPosition_ID  where a.intSalary_ID='".$positionrow['intSalary_ID']."'");
                                   $delpostrow=mysqli_fetch_array($delposition);
                               ?>
 
@@ -151,7 +153,7 @@
                                  <form role="form" method="post" enctype = "multipart/form-data" action="query/delete_query.php">
                                  <div class="container-fluid">
                                         <h5><center>Are you sure to delete Position <strong><?php echo $delpostrow['varPosition'] ; ?></strong> from the list? This method cannot be undone.</center></h5>
-                                        <input type="hidden" class="form-control"  name="position_id"   value="<?php echo $positionrow['intPosition_ID'] ; ?>" > 
+                                        <input type="hidden" class="form-control"  name="salary_id"   value="<?php echo $positionrow['intSalary_ID'] ; ?>" > 
                                   </div> 
 
 
@@ -196,8 +198,20 @@
                                    <label for="exampleInputEmail1">Department ShortName</label> 
                                     <input type="text" class="form-control"  name="department_shortname" placeholder="Enter Department Short Name" value="<?php echo $edepartrow['varDepartment_Shortname'] ; ?>">
                                   </div>
-<!-- 
-                                 <div class="form-group">
+
+
+                                  <div class="form-group">
+                                      <label for="empName" class="control-label">Status</label>
+
+                                      <select class="form-control select" style="width: 100%;" name="enumStatus" id="enumStatus">
+                                        <option value="<?php echo $edepartrow['enumStatus'] ; ?>"><?php echo $edepartrow['enumStatus'] ; ?></option>
+                                        <option value="Active">Active</option> 
+                                        <option value="Inactive">Inactive</option>  
+                                                                                                   
+                                        </select>
+                                </div>  
+
+                             <!-- <div class="form-group">
                                       <label for="empName" class="control-label">Officer / OIC / Heads</label>
 
                                       <select class="form-control select2" style="width: 100%;" name="stepincrement">
@@ -212,7 +226,10 @@
 
                                                 <?php } ?>                                                           
                                         </select>
-                                </div>  -->                                   
+                                </div>  --> 
+
+
+
                                   
                               </div>
                                   <div class="modal-footer ">
@@ -300,7 +317,7 @@
                         </div>
                         <!-- END DELETE MODAL SCHEDULE -->
 
-                                       <!-- DELETE MODAL SCHEDULE -->
+                    <!-- DELETE MODAL HOLIDAY -->
 
                         <div class="modal fade" id="delete-modal-holiday<?php echo $holidayrow['intHoliday_ID'] ; ?>"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                           <div class="modal-dialog" >
@@ -335,11 +352,11 @@
                           </div>
                           <!-- /.modal-dialog -->
                         </div>
-                        <!-- END DELETE MODAL SCHEDULE -->
+                        <!-- END DELETE MODAL HOLIDAY -->
 
 
 
-                         <!-- DELETE MODAL LEAVE -->
+                    <!-- DELETE MODAL LEAVE APPLICATION -->
 
                         <div class="modal fade" id="delete-modal-leave<?php echo $appleaverow['intApplication_ID']; ?>"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                           <div class="modal-dialog" >
@@ -435,7 +452,7 @@
 
 
 
-                          <!-- MODAL HOLIDAY -->
+                      <!-- MODAL UPDATE HOLIDAY -->
                         <div class="modal fade" id="edit-modal-holiday<?php echo $holidayrow['intHoliday_ID'] ; ?>">
                           <div class="modal-dialog">
                             <div class="modal-content">
@@ -478,7 +495,7 @@
 
 
 
-                                <!--MODAL FOR APPLY LEAVE  -->
+                    <!--MODAL FOR APPLY LEAVE  -->
                         <div class="modal fade" id="update-modal-employee-leave-apply<?php echo $appleaverow['intApplication_ID']; ?>">
                           <div class="modal-dialog">
                             <div class="modal-content">
@@ -497,7 +514,7 @@
                                       <select class="form-control select" style="width: 100%;" name="employ_id" disabled>
                                          <?php
                                            $leaveapply=mysqli_query($conn,"SELECT a.*, b.*,c.* FROM tbl_leave_application a INNER JOIN tbl_employee b ON b.intEmployee_ID = a.intEmployee_ID 
-                                             JOIN tbl_leave_type c ON c.intLeave_ID = a.intLeave_ID 
+                                             INNER JOIN tbl_leave_type c ON a.intLeave_ID = c.intLeave_ID 
                                              WHERE a.intApplication_ID = '".$appleaverow['intApplication_ID']."' ");
                                            $approw=mysqli_fetch_array($leaveapply);
                                               $employeenamerow = strtoupper($approw['varLastname'] . " ".$approw['varExtension_Name']." ". $approw['varFirstname']); 
@@ -536,16 +553,16 @@
                               <div class="col-md-12">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Leave Type</span></label>   
-                                    <select class="form-control" style="width: 100%;" name="leave_type" id="leave_type" >
+                                    <select class="form-control" style="width: 100%;" name="leave_type" id="leave_type" onchange="FetchLeaveType(this.value)">
                                        <option value="<?php echo $approw['intLeave_ID']; ?>"><?php echo  strtoupper($approw['varLeave_Type']);  ?></option>
                                        <?php
                                             //$sql = "SELECT * FROM tbl_leave_type";
-                                             $sql = "SELECT DISTINCT varLeave_Type FROM `tbl_leave_type`";
+                                             $sql = "SELECT DISTINCT varLeave_Type FROM tbl_leave_type";
                                             $query = $conn->query($sql);
                                             while($row = $query->fetch_assoc()){
 
                                               ?>
-                                              <option value="<?php echo $row['varLeave_Type']; ?>"><?php echo  strtoupper($row['varLeave_Type']);  ?></option>
+                                              <option value="<?php echo $row['varLeave_Type']; ?>"><?php echo  $row['varLeave_Type'];  ?></option>
 
                                         <?php } ?>
                                       </select> 
@@ -563,14 +580,14 @@
 
                                         <option value="<?php echo  strtoupper($approw['intLeave_ID']);  ?>"><?php echo  $approw['varLeave_Description'];  ?></option>
                                          <?php
-                                            $sql = "SELECT * FROM tbl_leave_type";
-                                            $query = $conn->query($sql);
-                                            while($row = $query->fetch_assoc()){
+                                           // $sql = "SELECT * FROM tbl_leave_type";
+                                          //  $query = $conn->query($sql);
+                                          //  while($row = $query->fetch_assoc()){
 
                                               ?>
-                                              <option value="<?php echo $row['intLeave_ID']; ?>"><?php echo  strtoupper($row['varLeave_Description']);  ?></option>
+                                            <!--   <option value="<?php echo $row['intLeave_ID']; ?>"><?php echo  strtoupper($row['varLeave_Description']);  ?></option> -->
 
-                                        <?php } ?>   
+                                        <?php// } ?>   
                                                                                
                                                                
                                     </select>

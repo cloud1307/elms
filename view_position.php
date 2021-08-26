@@ -45,7 +45,7 @@
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT *  FROM tbl_position";
+                    $sql = "SELECT a.*, b.* FROM tbl_salary_grade  a INNER JOIN tbl_position b ON a.intPosition_ID = b.intPosition_ID ";
                     $query5 = $conn->query($sql);
                     while($positionrow = $query5->fetch_assoc()){
                     
@@ -63,8 +63,8 @@
                                   <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">                         
-                                  <li><a href="#edit-modal-position<?php echo $positionrow['intPosition_ID']; ?>" data-toggle="modal" >Edit</a></li>
-                                  <li><a href="#delete-modal-position<?php echo $positionrow['intPosition_ID']; ?>" data-toggle="modal" >Delete</a></li>
+                                  <li><a href="#edit-modal-position<?php echo $positionrow['intSalary_ID']; ?>" data-toggle="modal" >Edit</a></li>
+                                  <li><a href="#delete-modal-position<?php echo $positionrow['intSalary_ID']; ?>" data-toggle="modal" >Delete</a></li>
                                 </ul>
                           </div>
 

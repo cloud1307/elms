@@ -1,6 +1,6 @@
 <?php 
 	include 'include/database.php';
-//	include('include/session.php');
+	include('include/session.php');
 
 
 if (isset($_POST['varLeave_Type'])) {	
