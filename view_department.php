@@ -80,7 +80,7 @@
                           </div>
                         </td>
                         </tr>
-                        <?php include 'modal/modal_update.php' ?>
+                        <?php include 'modal/modal_update.php'; ?>
                       <?php
                     }
                   ?>
@@ -98,6 +98,6 @@
     </div> 
   
     <?php include 'include/footer.php'; ?>
-    <?php include ('modal/modal_add.php') ?>
+    <?php include ('modal/modal_add.php'); ?>
   </div> 
   <?php include 'include/scripts.php'; ?>

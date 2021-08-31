@@ -67,6 +67,7 @@
           <ul class="treeview-menu">            
             <li><a href="view_leave_type.php"><i class="fa fa-circle-o"></i> Leave Type</a></li>
             <li><a href="view_leave_application.php"><i class="fa fa-circle-o"></i> View Pending Application</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Leave Deduction</a></li>
             <li><a href="view_leave_earn.php"><i class="fa fa-circle-o"></i> Leave Earn</a></li>     
           </ul>
         </li>

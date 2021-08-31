@@ -24,7 +24,7 @@ $sql1 = mysqli_query($conn,"SELECT COUNT(*) FROM tbl_leave_application WHERE YEA
      
 
       <h1>
-        Welcome To Employees' Leave Management System
+        Welcome To Human Resource Management System
         <small>Start Updating Your information</small>
       </h1>
       <ol class="breadcrumb">

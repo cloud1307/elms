@@ -147,6 +147,7 @@ $(function(){
   $(function () {
     $('#example1').DataTable()
     $('#dataleave').DataTable()
+    $('#example8').DataTable()
     $('#example7').DataTable()
     $('#example6').DataTable()
     $('#example5').DataTable()
@@ -201,6 +202,8 @@ $(function(){
     )
 
     //Date picker
+    $('#datepicker9').datepicker();
+    $('#datepicker8').datepicker();
     $('#datepicker7').datepicker();
     $('#datepicker6').datepicker();
     $('#datepicker5').datepicker();
@@ -248,4 +251,3 @@ $(function(){
 </script>
 
 
-                      

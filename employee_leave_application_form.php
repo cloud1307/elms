@@ -25,9 +25,58 @@
       <div class="box">        
         <div class="box-body">
          <h3 class="box-title">Application Leave </h3>
-      <form role="form" method="post" id="register_form" action="query/add_query.php" enctype="multipart/form-data">
+
+                     <form role="form" method="post" id="register_form" action="query/add_query.php" enctype="multipart/form-data">
+                            
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">Leave Type</span></label>   
+                                    <select class="form-control" style="width: 100%;" name="leave_type" id="leave_type" >
+                                       <!-- <select class="form-control" style="width: 100%;" name="leave_type" id="leave_type"  onchange="FetchLeaveType(this.value)" > -->
+                                       <option value="0">Select Leave Type</option>
+                                       <?php
+                                           
+                                          // $sql = "SELECT DISTINCT varLeave_Type FROM `tbl_leave_type`";
+
+                                            $sql = "SELECT *  FROM `tbl_leave_type`";
+
+                                            $query = $conn->query($sql);
+                                            while($row = $query->fetch_assoc()){
+
+                                              ?>
+                                       
+                                            
+                                              <option value="<?php echo $row['intLeave_ID']; ?>"><?php echo  strtoupper($row['varLeave_Description']);  ?></option>
+
+
+                                        <?php } ?>
+                                      </select> 
+                                </div>                                              
+                              </div> 
+                              <!-- <option value="<?php echo $row['varLeave_Type']; ?>"><?php echo  strtoupper($row['varLeave_Type']);  ?></option> -->
+                              <!--  <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">Leave Description</span></label>                                 
+
+                                    <select class="form-control" style="width: 100%;" name="description" id="description"  > 
+                                      <option value="0">Leave Description</option> 
+                                    </select>
+                                </div>
+                              </div> -->
+
+                            <div class="col-md-12">
+                                <div class="form-group"> 
+                                   <label for="exampleInputEmail1">Day Type</label>
+                                    <select name="type"  id="type" class="form-control" style="width: 100%;">
+                                            <option value="1"<?php echo (isset($type) && $type ==1)?'selected' : '' ?>>Whole Day</option>
+                                            <option value="2"<?php echo (isset($type) && $type ==2)?'selected' : '' ?>>Half Day</option>
+                                                                                         
+                                    </select>
+                                   </div>
+                               </div> 
          
-                 <div class="col-md-12">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Inclusive Date From</label>   
                                       <input type="text" class="form-control" id="datepicker6" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask name="date_from" placeholder="Select Inclusive Date From" >
@@ -40,42 +89,14 @@
                                      <input type="text" class="form-control" id="datepicker5" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask name="date_to" placeholder="Select Inclusive Date To" >
                                 </div>                                                                                 
                               </div>
-
                               <div class="col-md-12">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1">Leave Type</span></label>   
-                                    <select class="form-control" style="width: 100%;" name="leave_type" id="leave_type"  onchange="FetchLeaveType(this.value)" >
-                                       <option value="0">Select Leave Type</option>
-                                       <?php
-                                           
-                                           $sql = "SELECT DISTINCT varLeave_Type FROM `tbl_leave_type`";
-                                            $query = $conn->query($sql);
-                                            while($row = $query->fetch_assoc()){
-
-                                              ?>
-                                       
-                                              <option value="<?php echo $row['varLeave_Type']; ?>"><?php echo  strtoupper($row['varLeave_Type']);  ?></option>
-
-                                        <?php } ?>
-                                      </select> 
-                                </div>                                              
-                              </div> 
-                              <!-- <option value="<?php echo $row['varLeave_Type']; ?>"><?php echo  strtoupper($row['varLeave_Type']);  ?></option> -->
-                               <div class="col-md-12">
-                                <div class="form-group">
-                                  <label for="exampleInputEmail1">Leave Description</span></label>
-
-                                 
-
-                                    <select class="form-control" style="width: 100%;" name="description" id="description"  > 
-                                      <option value="0">Leave Description</option>  
-                                        
-
-                                                                             
-                                                               
-                                    </select>
-                                </div>
+                                  <label for="exampleInputEmail1">No. of Days</label>   
+                                     <input type="number" class="form-control"   name="leave_days" id="leave_days" placeholder="No. of Days" readonly >
+                                </div>                                                                                 
                               </div>
+
+                              
                           <?php  if($userlevel=="HR Manager" || $userlevel == "System Admin" || $userlevel == "Department Head" || $userlevel == "Admin Officer" ){?>
                               <div class="col-md-12">
                                 <div class="form-group"> 
@@ -133,6 +154,56 @@ function FetchLeaveType(value){
 
     })
   }
+
+  
+ var days = 0;
+ var start = new Date( $('#date_from').val());
+ var end = new Date( $('#date_to').val());
+ var diffdate = (end - start) / (1000 * 60 * 60 * 24);
+ days = Math.round(diffdate);
+ $('#leave_days').html(days);
+
+
+// function calc_days(){
+//     var days = 0;
+//     if($('#date_from').val() != ''){
+//       var start = new Date($('#date_from').val());
+//       var end = new Date($('#date_to').val());
+//       var diffDate = (end - start) / (1000 * 60 * 60 * 24);
+//       days = Math.round(diffDate);
+//     }
+//     if($('#type').val() == 2)
+//       $('#leave_days').val('.5')
+//     else
+//       $('#leave_days').val(days +1)
+
+
+//     $(document).ready(function(){
+//     $('.select2').select2();
+//     $('.select2-selection').addClass('form-control')
+//     $('#type').change(function(){
+//       if($(this).val() == 2){
+//       console.log($(this).val())
+//         $('#leave_days').val('.5')
+//         $('#date_to').attr('required',false)
+//         $('#date_to').val($('#date_from').val())
+//         $('#date_to').closest('.form-group').hide('fast')
+//       }else{
+//         $('#date_to').attr('reqiured',true)
+//         $('#date_to').closest('.form-group').show('fast')
+//         $('#leave_days').val(1)
+//       }
+//       calc_days()
+//     })
+//     $('#date_from, #date_to').change(function(){
+//       calc_days()
+//     })
+
+//   }
+
+
+
+
 
 
 

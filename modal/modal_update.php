@@ -530,7 +530,7 @@
                                              
 
                                               ?>
-                                              <option value="<?php echo $approw['intEmployee_ID']; ?>"><?php echo $employeenamerow   ?></option>
+                                              <option value="<?php echo $approw['intEmployee_ID']; ?>"><?php echo $employeenamerow?></option>
                                       </select>            
                                 </div>                                                                                 
                               </div>
@@ -755,7 +755,6 @@
                                   
 
                                     // $selectleave=mysqli_query($conn,"SELECT a.*, b.*, c.* FROM tbl_leave_application a INNER JOIN tbl_leave_type b ON b.intLeave_ID = a.intLeave_ID INNER JOIN tbl_leave_balance c ON a.intLeave_ID = c.intLeave_ID WHERE a.intApplication_ID = '".$appleaverow['intApplication_ID']."' AND a.intEmployee_ID = '".$computeapplyrow['intEmployee_ID']."' ");
-
                                     // $selectrow=mysqli_fetch_array($selectleave);
 
                                     $leavebance = $computeapplyrow['Leave_Balance'];
@@ -807,7 +806,6 @@
                           <!-- /.modal-dialog -->
                         </div>
                      
-
 
 
 

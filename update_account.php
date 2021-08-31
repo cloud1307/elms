@@ -139,13 +139,13 @@
               <div class="form-group">
                 <label  class="col-sm-3 control-label">Position</label>
                     <select class="form-control" style="width: 100%;" name="position"  id="position">
-                      <option selected="selected" value="<?php echo strtoupper($emp_user['intPosition_ID']); ?>"><?php echo strtoupper($emp_user['varPosition']); ?></option>
+                      <option selected="selected" value="<?php echo strtoupper($emp_user['intPosition_ID']); ?>"><?php echo strtoupper($emp_user['varPosition']." / ".$emp_user['enumStep_Increment']); ?></option>
                        
                        <?php
-                            $sql = "SELECT * FROM tbl_position";
+                             $sql = "SELECT a.*, b.* FROM tbl_position a INNER JOIN tbl_salary_grade b ON a.intPosition_ID = b.intPosition_ID ";
                             $query = $conn->query($sql);
                             while($row = $query->fetch_assoc()){
-                              $position = strtoupper($row['varPosition']);
+                              $position = strtoupper($row['varPosition'] ." / ".$row['enumStep_Increment']);
                               ?>
                               <option value="<?php echo $row['intPosition_ID']; ?>"><?php echo  $position;  ?></option>
 

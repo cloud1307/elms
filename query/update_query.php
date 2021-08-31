@@ -319,7 +319,8 @@ if(isset($_POST['compute_leave'])){
 		    	 
 		  $sql = "UPDATE  tbl_leave_application SET enumLeave_Process = '4' ,enumLeave_Status ='Approve' WHERE intApplication_ID = '$application_id' ";
 		  $sql2 =" UPDATE tbl_leave_balance  SET Leave_Balance = '$balance_leave' WHERE intEmployee_ID = '$emp_id' AND intLeave_ID = '$leave_id' ";
-		  $sql1 = "INSERT tbl_leave_deduction (intApplication_ID, Compute_Date, doubleDeduction) VALUES ('$application_id', CURDATE(), '$leave_accumulated') ";
+		  
+		  $sql1 = "INSERT tbl_leave_deduction (intEmployee_ID, Compute_Date, intLeave_ID, doubleDeduction) VALUES ('$emp_id', CURDATE(), '$leave_id', '$leave_accumulated') ";
 		 
 
 		
@@ -354,7 +355,7 @@ if(isset($_POST['update_leave_application'])){
     if(isset($_POST['update_leave_application'])){
 
     	$application_id = mysqli_real_escape_string($conn,$_POST['application_id']);
-		$date_from = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_from'])));
+			$date_from = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_from'])));
      	$date_to = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_to'])));
      	$leave_type=mysqli_real_escape_string($conn,$_POST['description']);
      	//$description=mysqli_real_escape_string($conn,$_POST['description']);

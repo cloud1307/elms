@@ -37,7 +37,7 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>                    
-                  <th>Holiday Desciption</th>           
+                  <th>Holiday Description</th>           
                   <th>Date</th>
                   <th>Action</th>
                 </thead>
@@ -84,6 +84,6 @@
     </div> 
   
     <?php include 'include/footer.php'; ?>
-    <?php include ('modal/modal_add.php') ?>
+    <?php include ('modal/modal_add.php'); ?>
   </div> 
   <?php include 'include/scripts.php'; ?>

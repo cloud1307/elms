@@ -51,6 +51,14 @@ include 'include/database.php';
                                      <input type="text" class="form-control" id="datepicker5" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask name="date_to" placeholder="Select Inclusive Date To" >
                                 </div>                                                                                 
                               </div>
+                              
+
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">No. of Days</label>   
+                                     <input type="number" class="form-control"   name="no_of_days" placeholder="No. of Days" disabled="" value=" <?php// echo $diff ; ?>">
+                                </div>                                                                                 
+                              </div>
 
                               <div class="col-md-12">
                                 <div class="form-group">
@@ -72,7 +80,7 @@ include 'include/database.php';
 
                               </div> 
 
-                               <div class="col-md-12">
+                              <div class="col-md-12">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Leave Description</span></label> 
                                     <select class="form-control" style="width: 100%;" name="description" id="description"  >  
@@ -314,7 +322,7 @@ include 'include/database.php';
                                         <option value="Normal Work Time">Normal Work Time</option>
                                                                                                    
                                     </select>
-                                    </div>
+                                  </div>
 
                                   
                               </div>
@@ -365,6 +373,123 @@ include 'include/database.php';
                           </div>
                           <!-- /.modal-dialog -->
                         </div>
+
+
+                        <!-- MODAL VIEW LEAVE -->
+                        <div class="modal fade" id="modal-add-deduction<?php echo $deductionrow['intEmployee_ID'] ; ?>">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header alert-info">
+                                <button type="button " class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title"><i class="fa fa-pencil-square-o margin-r-5"></i>Add Leave Deduction</h4>
+                              </div>
+                              <div class="modal-body ">
+                              <?php
+
+                                 // $balancesql="SELECT a.*, b.* FROM tbl_employee a INNER JOIN tbl_leave_balance b ON b.intEmployee_ID = a.intEmployee_ID WHERE a.intEmployee_ID='".$deductionrow['intEmployee_ID']."'";
+
+                                 //  $query2 = $conn->query($balancesql);
+                                 //   while($viewbal = $query2->fetch_assoc()){
+                                
+
+                                 //    if ($viewbal['intLeave_ID'] == 1) {
+                                 //    $leaveVl = $viewbal['Leave_Balance'];
+                                 //    }elseif ($viewbal['intLeave_ID'] == 2) {                                 
+                                 //    $leaveSl = $viewbal['Leave_Balance'];
+                                 //    }
+                                    
+                                 
+
+                                 // }
+                                 
+                                  $viewsql=mysqli_query($conn,"SELECT a.*, b.* FROM tbl_employee a INNER JOIN tbl_leave_balance b ON b.intEmployee_ID = a.intEmployee_ID WHERE b.intLeave_ID = 1 AND a.intEmployee_ID='".$deductionrow['intEmployee_ID']."'");                               
+                                  $viewData=mysqli_fetch_array($viewsql); 
+                                  $employeename = strtoupper($deductionrow['varLastname'] . " ".$deductionrow['varExtension_Name']." ". $deductionrow['varFirstname']);
+
+                                  if ($viewData['intLeave_ID'] == 1) {
+                                    $leaveVl = $viewData['Leave_Balance'];
+                                  }
+
+                              ?>  
+
+                                                         
+                                 <form role="form" method="post" enctype = "multipart/form-data" action="query/add_query.php">
+                                  
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                   <label for="exampleInputEmail1">Available VL: </label>   
+                                    <?php echo $leaveVl ;?>
+                                  </div>
+                                </div>
+
+                                <?php
+
+                              $balancesql=mysqli_query($conn,"SELECT a.*, b.* FROM tbl_employee a INNER JOIN tbl_leave_balance b ON b.intEmployee_ID = a.intEmployee_ID WHERE b.intLeave_ID = 2  AND a.intEmployee_ID='".$deductionrow['intEmployee_ID']."'   ");                               
+                                  $viewbal=mysqli_fetch_array($balancesql); 
+                                  if ($viewbal['intLeave_ID'] == 2) {                                 
+                                    $leaveSl = $viewbal['Leave_Balance'];
+                                    }
+
+                               ?>   
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                   <label for="exampleInputEmail1">Available SL: </label>
+                                   <?php echo $leaveSl ;?>   
+                                    
+                                  </div>
+
+
+
+                                </div>
+
+                               
+                                  <div class="form-group">
+                                    <!-- HIDDEN TEXT FIELD EMPLOYEE ID -->
+                                    <input type="hidden" class="form-control"  name="employee_id"   value="<?php echo $deductionrow['intEmployee_ID'] ; ?>" >
+                                   <label for="exampleInputEmail1">Employee Name</label>   
+                                    <input type="text" class="form-control"    value="<?php echo $employeename ; ?>" readonly>
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label for="exampleInputEmail1">Leave Type</label>
+                                      <select class="form-control" style="width: 100%;" name="leave_type">
+                                        <option value="1">Vacation Leave</option>                                    
+                                        <option value="2">Sick Leave</option>
+                                                                                                   
+                                    </select>
+                                  </div>
+                                  <div class="form-group">
+                                   <label for="exampleInputEmail1">Number of Deduction</label>   
+                                    <input type="number" class="form-control" id="number_deduction"  name="number_deduction" min="0" value="0" step="any" placeholder="Enter Leave Deduction">
+                                  </div>
+                                  <div class="form-group">
+                                   <label for="exampleInputEmail1">Date of Deduction</label>  
+                                    <input type="text" class="form-control" id="datepicker9" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask name="date_deduction" placeholder="Enter Deduction date" >
+                                  </div> 
+                                  <div class="form-group">
+                                     <label for="exampleInputPassword1">Remarks</label>
+                                      <textarea class="form-control"  rows="5"  name="remarks" value="" placeholder="Enter Your Remarks"></textarea>    
+                                  </div>                                                               
+                                  
+                              </div>
+                                  <div class="modal-footer ">
+                                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                      <button type="submit" name="Add_deduction" class="btn btn-primary">Save Deduction</button>
+                                      
+                                    </form>
+                                  </div>
+                            </div>
+                            <!-- /.modal-content -->
+                          </div>
+                          <!-- /.modal-dialog -->
+                        </div> 
+                        <!-- END MODAL HOLIDAY -->
+
+
+
+
+
 
 
 <script type="text/javascript">

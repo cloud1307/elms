@@ -12,7 +12,7 @@ if(isset($_POST['add_leave_application'])){
         $emp_id=mysqli_real_escape_string($conn,$_POST['emp_id']);
         $date_from = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_from'])));
      	$date_to = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_to'])));
-     	$leave_type=mysqli_real_escape_string($conn,$_POST['description']);
+     	$leave_type=mysqli_real_escape_string($conn,$_POST['leave_type']);
      //	$description=mysqli_real_escape_string($conn,$_POST['description']);
         $leave_process=mysqli_real_escape_string($conn,$_POST['leave_process']);
 if($userlevel=="Employee"){
@@ -22,13 +22,14 @@ if($userlevel=="Employee"){
     }else{
 
     	
-    	//$date_from = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_from'])));
-     //	$date_to = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_to'])));
-     	//$leave_type=mysqli_real_escape_string($conn,$_POST['leave_type']);
-     //	$description=mysqli_real_escape_string($conn,$_POST['description']);
+        //  $date_from = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_from'])));
+        //	$date_to = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_to'])));
+     	//  $leave_type=mysqli_real_escape_string($conn,$_POST['leave_type']);
+        //	$description=mysqli_real_escape_string($conn,$_POST['description']);
      	$leave_process=mysqli_real_escape_string($conn,$_POST['leave_process']);
 
     //   $sql = "INSERT INTO tbl_leave_application (intEmployee_ID, intLeave_ID, Filling_Date, varDescription_Leave, Inclusive_Date_From, Inclusive_Date_To, enumLeave_Process) VALUES ('$id_session', '$leave_type', CURDATE(), '$description', '$date_from','$date_to','$leave_process')";
+       
         $sql = "INSERT INTO tbl_leave_application (intEmployee_ID, intLeave_ID, Filling_Date, Inclusive_Date_From, Inclusive_Date_To, enumLeave_Process) VALUES ('$emp_id', '$leave_type', CURDATE(),  '$date_from','$date_to','$leave_process')";
 
 
@@ -104,8 +105,35 @@ if(isset($_POST['add_application'])){
 }
 
 
+ if(isset($_POST['Add_deduction'])){
+ 
+            $date_from = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_from'])));
+            $date_to = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_to'])));
+            $leave_type=mysqli_real_escape_string($conn,$_POST['leave_type']);
+
+            $employee_id=mysqli_real_escape_string($conn,$_POST['employee_id']);            
+            $leave_type=mysqli_real_escape_string($conn,$_POST['leave_type']);
+            $number_deduction=mysqli_real_escape_string($conn,$_POST['number_deduction']);
+            $date_deduction = date('Y-m-d',strtotime(mysqli_real_escape_string($conn,$_POST['date_deduction'])));
+            $remarks=mysqli_real_escape_string($conn,$_POST['remarks']);
+
+             $sql = "INSERT INTO tbl_leave_deduction (intEmployee_ID, intLeave_ID, Compute_Date, doubleDeduction,varReason) VALUES ('$employee_id', '$leave_type', '$date_deduction', '$number_deduction', '$remarks')";
+
+     
 
 
+            if($conn->query($sql)){
+                $_SESSION['success'] = ' Leave Deduction Successfully Applied';
+            }
+            else{
+                $_SESSION['error'] = $conn->error;
+            }
+
+        }else{
+            $_SESSION['error'] = 'Fill up add form first';
+        }
+
+         header('location: ../view_employee.php');
 
 
 ?>

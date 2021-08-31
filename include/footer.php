@@ -4,6 +4,6 @@
 
       <b>Version</b> 2.4.1
     </div>
-    <strong>Copyright &copy; <?php print date("Y ");?><a href="#">Employees' Leave Management System</a>.</strong> All rights
+    <strong>Copyright &copy; <?php print date("Y ");?><a href="#">Human Resource Management System</a>.</strong> All rights
     reserved.
 </footer>

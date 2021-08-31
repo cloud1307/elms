@@ -10,7 +10,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   	<div class="login-logo">
-  		<b>EMPLOYEES' LEAVE MANAGEMENT SYSTEM</b>
+  		<b>HUMAN RESOURCE MANAGEMENT SYSTEM</b>
   	</div>
   
   	<div class="login-box-body">
