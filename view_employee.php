@@ -23,7 +23,7 @@
     <!-- Main content -->
     <section class="content"> 
       <?php
-        include 'modal/notification.php'   
+        include 'modal/notification.php'; 
       ?>
       <div class="box">        
         <div class="box-body">
